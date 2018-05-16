@@ -7,12 +7,12 @@ and open the template in the editor.
     Created on : 4 avr. 2018, 10:20:05
     Author     : Manu
 */
-/* Pour pouvoir utiliser une hauteur (height) ou une hauteur minimale
+/* Pour pouvoir utiliser une hauthor (height) ou une hauthor minimale
    (min-height) sur un bloc, il faut que son parent direct ait lui-même une
-   hauteur déterminée (donc toute valeur de height sauf "auto": hauteur en
+   hauthor déterminée (donc toute valeur de height sauf "auto": hauthor en
    pixels, em, autres unités...).
-   Si la hauteur du parent est en pourcentage, elle se réfère alors à la
-   hauteur du «grand-père», et ainsi de suite.
+   Si la hauthor du parent est en pourcentage, elle se réfère alors à la
+   hauthor du «grand-père», et ainsi de suite.
    Pour pouvoir utiliser un "min-height: 100%" sur div#global, il nous faut:
    - un parent (body) en "height: 100%";
    - le parent de body également en "height: 100%". */
@@ -30,12 +30,12 @@ h1 {
     color: white;
 }
 
-.titreBillet {
+.titlePost {
     margin-bottom : 0px;
 }
 
 #global {
-    min-height: 100%;  /* Voir commentaire sur html et body plus haut */
+    min-height: 100%;  /* Voir comment sur html et body plus haut */
     background: #333534;
     width: 70%;
     margin: auto;    /* Permet de centrer la div */
@@ -43,18 +43,18 @@ h1 {
     padding: 5px 20px;
 }
 
-#contenu {
+#content {
     margin-bottom : 30px;
 }
 
-#titreBlog, #piedBlog {
+#titleBlog, #footerBlog {
     text-align: center;
 }
 
-#titreReponses {
+#titleReponses {
     font-size : 100%;
 }
 
-#txtCommentaire {
+#txtComment {
     width: 50%;
 }
