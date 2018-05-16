@@ -58,7 +58,7 @@ class Routeur {
         return NULL;
   }
 
-  // Affiche une erreur
+  // Show an error
   private function erreur($msgErreur) {
     $vue = new Vue("Erreur");
     $vue->generer(array('msgErreur' => $msgErreur));
