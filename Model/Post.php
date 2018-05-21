@@ -1,28 +1,104 @@
 <?php
 
-require_once 'Model/Model.php';
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-class Post extends Model {
-
-    // Returns the list of blog posts
-    public function getPosts() {
-        $sql = 'select BIL_ID as id, BIL_DATE as date,'
-          . ' BIL_TITLE as title, BIL_CONTENT as content from T_POST'
-          . ' order by BIL_ID desc';
-        $posts = $this->executeRequest($sql);
-        return $posts;
-    }
-
-    // Returns the information of a post
-    public function getPost($idPost) {
-        $sql = 'select BIL_ID as id, BIL_DATE as date,'
-          . ' BIL_TITLE as title, BIL_CONTENT as content from T_POST'
-          . ' where BIL_ID=?';
-        $post = $this->executeRequest($sql, array($idPost));
-        if ($post->rowCount() == 1)
-            return $post->fetch();  // Access to the first result line
-        else
-            throw new Exception("No post corresponds to the ID '$idPost'");
+/**
+ * Description of Post
+ *
+ * @author Manu
+ */
+class Post {
+    
+    private $_id;
+    private $_date;
+    private $_title;
+    private $_content;
+    
+    // Contructor //
+    
+    public function __construct(array $data) {
+        $this->hydrate($data);
     }
     
+    // Hydratation //
+    
+    public function hydrate($data) {
+        foreach ($data as $key => $value){
+            // Define the name of the corresponding method
+            $method = 'set' . ucfirst($key);
+            // Check if a such method exist
+            // method_exists(object, 'method name')
+            if(method_exists($this, $method)){
+                $this->$method($value);
+            }
+        }
+    }
+    
+    // Functions reflecting the functionnalities of the post //
+    
+    // GETTERS //
+    
+    public function getId() {
+        return $this->_id;
+    }
+    
+    public function getDate() {
+        return $this->_date;
+    }
+    
+    public function getTitle() {
+        return $this->_title;
+    }
+    
+    public function getContent() {
+        return $this->_content;
+    }
+    
+    // SETTERS // validate & set the values (do not sanitize them) //
+    
+    // Test if the id is an integrer & stock it in $_id
+    public function setId($id) {
+        $ID = (int) $id;
+        if($id > 0){
+            $this->_id = $ID;
+        }
+    }
+    
+    // Test if the date has the right format & stock it in $_date
+    // If the parameter $data is an empty string (default value), the current date will be stocked
+    public function setDate($date = '') {
+        $format = 'Y-m-d H:i:s';	
+        $datecheck = DateTime::createFromFormat($format, $date);
+        if($datecheck){
+            $datecheck = $datecheck->format($format);
+            if($datecheck == $date){
+                    $this->_date = $date;
+            }
+        } else {
+            $this->_date = date("Y-m-d H:i:s");
+        }
+    }
+    
+    // Test if the title is a string and if the length is >1 and <100 & stock it in $_title
+    public function setTitle($title) {
+        if(is_string($title)){
+            if((strlen(utf8_decode($title))) > 1 && (strlen(utf8_decode($title))) < 100){
+                $this->_title = $title;
+            }
+        }
+    }
+    
+    // Test if the content is a string and if the length is >1 and <400 & stock it in $_content
+    public function setContent($content) {
+        if(is_string($content)){
+            if((strlen(utf8_decode($content))) > 1 && (strlen(utf8_decode($content))) < 400){
+                $this->_content = $content;
+            }
+        }
+    }
+
 }
