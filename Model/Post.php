@@ -42,7 +42,7 @@ class Post {
     
     // GETTERS //
     
-    public function getId() {
+    public function getIdPost() {
         return $this->_id;
     }
     
@@ -63,7 +63,7 @@ class Post {
     // Test if the id is an integrer & stock it in $_id
     public function setId($id) {
         $ID = (int) $id;
-        if($id > 0){
+        if($ID > 0){
             $this->_id = $ID;
         }
     }

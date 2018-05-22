@@ -20,6 +20,6 @@
     <input type="submit" value="Poster" />
 </form>
 <?php foreach ($comments as $comment): ?>
-  <p><?= $comment['author'] ?> dit :</p>
+<p>(<time><?= $comment['date'] ?></time>) <?= $comment['author'] ?> :</p>
   <p><?= $comment['content'] ?></p>
 <?php endforeach; ?>

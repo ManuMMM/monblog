@@ -50,3 +50,8 @@ h1 {
 #txtComment {
     width: 50%;
 }
+
+time {
+    font-size: 75%;
+    color: red;
+}

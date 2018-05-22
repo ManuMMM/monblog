@@ -6,8 +6,8 @@
  * @author Manu
  */
 
-require_once 'Model/Post.php';
-require_once 'Model/Comment.php';
+require_once 'Model/PostManager.php';
+require_once 'Model/CommentManager.php';
 require_once 'View/View.php';
 
 class ControllerPost {
