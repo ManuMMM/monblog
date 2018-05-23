@@ -1,8 +1,6 @@
 <?php
 
-require_once 'Model/Model.php';
-
-class Comment extends Model {
+class CommentManager extends Model {
 
     // Returns the list of comments associated with a post
     public function getComments($idPost) {

@@ -13,7 +13,7 @@
  */
 class Post {
     
-    private $_id;
+    private $_idPost;
     private $_date;
     private $_title;
     private $_content;
@@ -43,7 +43,7 @@ class Post {
     // GETTERS //
     
     public function getIdPost() {
-        return $this->_id;
+        return $this->_idPost;
     }
     
     public function getDate() {
@@ -60,26 +60,28 @@ class Post {
     
     // SETTERS // validate & set the values (do not sanitize them) //
     
-    // Test if the id is an integrer & stock it in $_id
+    // Test if the id is an integrer & stock it in $_idPost
     public function setId($id) {
         $ID = (int) $id;
         if($ID > 0){
-            $this->_id = $ID;
+            $this->_idPost = $ID;
         }
     }
     
     // Test if the date has the right format & stock it in $_date
     // If the parameter $data is an empty string (default value), the current date will be stocked
     public function setDate($date = '') {
-        $format = 'Y-m-d H:i:s';	
-        $datecheck = DateTime::createFromFormat($format, $date);
-        if($datecheck){
-            $datecheck = $datecheck->format($format);
-            if($datecheck == $date){
-                    $this->_date = $date;
+        if(is_string($date)) {
+            $format = 'Y-m-d H:i:s';	
+            $datecheck = DateTime::createFromFormat($format, $date);
+            if($datecheck){
+                $datecheck = $datecheck->format($format);
+                if($datecheck == $date){
+                        $this->_date = $date;
+                }
+            } else {
+                $this->_date = date("Y-m-d H:i:s");
             }
-        } else {
-            $this->_date = date("Y-m-d H:i:s");
         }
     }
     

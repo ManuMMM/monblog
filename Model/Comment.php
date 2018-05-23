@@ -12,7 +12,7 @@
  * @author Manu
  */
 class Comment {
-    private $_id;
+    private $_idComment;
     private $_date;
     private $_author;
     private $_content;
@@ -43,7 +43,7 @@ class Comment {
     // GETTERS //
     
     public function getIdComment() {
-        return $this->_id;
+        return $this->_idComment;
     }
     
     public function getDate() {
@@ -68,7 +68,7 @@ class Comment {
     public function setIdComment($id) {
         $ID = (int) $id;
         if($ID > 0){
-            $this->_id = $ID;
+            $this->_idComment = $ID;
         }
     }
     
@@ -99,7 +99,7 @@ class Comment {
     // Test if the content is a string and if the length is >1 and <400 & stock it in $_content
     public function setContent($content) {
         if(is_string($content)){
-            if((strlen(utf8_decode($content))) > 1 && (strlen(utf8_decode($content))) < 400){
+            if((strlen(utf8_decode($content))) > 1 && (strlen(utf8_decode($content))) < 200){
                 $this->_content = $content;
             }
         }

@@ -6,7 +6,6 @@
  * @author Manu
  */
 
-require_once 'Model/PostManager.php';
 require_once 'View/View.php';
 
 class ControllerHome {
@@ -14,7 +13,7 @@ class ControllerHome {
     private $post;
 
     public function __construct() {
-        $this->post = new Post();
+        $this->post = new PostManager();
     }
 
     // Show the list of all the posts of the blog

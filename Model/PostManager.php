@@ -1,8 +1,6 @@
 <?php
 
-require_once 'Model/Model.php';
-
-class Post extends Model {
+class PostManager extends Model {
 
     // Returns the list of blog posts
     public function getPosts() {
