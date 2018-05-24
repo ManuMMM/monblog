@@ -6,10 +6,6 @@
  * @author Manu
  */
 
-require_once 'Controller/ControllerHome.php';
-require_once 'Controller/ControllerPost.php';
-require_once 'View/View.php';
-
 class Router {
     
     private $ctrlHome;

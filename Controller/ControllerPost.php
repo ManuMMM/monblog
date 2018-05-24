@@ -6,8 +6,6 @@
  * @author Manu
  */
 
-require_once 'View/View.php';
-
 class ControllerPost {
 
     private $post;

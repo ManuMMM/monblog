@@ -6,7 +6,5 @@
 require_once 'Autoloader.php';
 Autoloader::register();
 
-require 'Controller/Router.php';
-
 $router = new Router();
 $router->routeRequest();
