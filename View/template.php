@@ -16,6 +16,7 @@
             </div>
             <footer id="footerBlog">
                 Blog realisé avec PHP, HTML5 et CSS.
+                <a href="index.php?action=admin">Admin</a>
             </footer>
         </div> <!-- #global -->
     </body>

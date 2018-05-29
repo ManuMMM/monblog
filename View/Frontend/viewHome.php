@@ -3,7 +3,7 @@
 <?php foreach ($posts as $post): ?>
     <article>
         <header>
-            <a href="<?= "index.php?action=post&id=" . $post->getIdPost(); ?>">
+            <a href="<?= "index.php?action=getPost&id=" . $post->getIdPost(); ?>">
                 <h1 class="titlePost"><?= $post->getTitle(); ?></h1>
             </a>
             <time><?= $post->getDate(); ?></time>

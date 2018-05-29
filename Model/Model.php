@@ -25,5 +25,10 @@ abstract class Model {
         }
         return $this->_db;
     }
+    
+    // Return the id of the last line inserted
+    protected function lastId() {
+        return $this->getDb()->lastInsertId();
+    }
 
 }

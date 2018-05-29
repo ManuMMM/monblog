@@ -17,6 +17,7 @@ class Comment {
     private $_author;
     private $_content;
     private $_idPost;
+    private $_flag;
     
     // Contructor //
     
@@ -38,7 +39,17 @@ class Comment {
         }
     }
     
-    // Functions reflecting the functionnalities of the post //
+    // Functions reflecting the functionnalities of the comment //
+    
+    // Report the comment by flagging it
+    public function reportComment() {
+        $this->setFlag(TRUE);
+    }
+    
+    // Allow the comment to be display by removing the flag
+    public function allowComment() {
+        $this->setFlag(FALSE);
+    }
     
     // GETTERS //
     
@@ -60,6 +71,10 @@ class Comment {
     
     public function getIdPost() {
         return $this->_idPost;
+    }
+    
+    public function getFlag() {
+        return $this->_flag;
     }
     
     // SETTERS // validate & set the values (do not sanitize them) //
@@ -113,4 +128,9 @@ class Comment {
         }
     }
     
+    // Test if the state is an boolean & stock it in $_flag
+    public function setFlag($state = 0) {
+        $state = (bool)$state;
+        $this->_flag = $state;
+    }
 }
