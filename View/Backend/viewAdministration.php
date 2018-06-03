@@ -2,13 +2,13 @@
 <form method="post" action="#writePost">
     <button>Ecrire un article</button>
 </form>
-<form method="post" action="#updatePost">
+<form method="post" action="#modifyPost">
     <button>Editer un article</button>
 </form>
 <form method="post" action="#moderateComments">
     <button>Modérer les commentaires</button>
 </form>
-<section id="writePost">
+<section class="adminSections" id="writePost">
     <header>
         <h1 id="admin_write_article">Rédaction d'article</h1>
     </header>
@@ -20,12 +20,12 @@
     <input type="submit" value="Publier" />
     </form>
 </section>
-<section id="updatePost">
-    <h2>Editer un article</h2>
+<section class="adminSections" id="modifyPost">
+    <h2>Modifier un article</h2>
     <?php foreach ($posts as $post): ?>
     <section>
         <a href="<?= "index.php?action=getPost&id=" . $post->getIdPost(); ?>">
-            <h1 class="titlePost"><?= $post->getTitle(); ?></h1>
+            <h2 class="titlePost"><?= $post->getTitle(); ?></h2>
         </a>
         <time><?= $post->getDate(); ?></time>
         <form method="post" action="index.php?action=editor">
@@ -41,13 +41,13 @@
     <hr />
     <?php endforeach; ?>
 </section>
-<section id="moderateComments">
+<section class="adminSections" id="moderateComments">
     <h2>Modérer les commentaires</h2>
     <?php foreach ($comments as $comment): ?>
         <p>(<time><?= $comment->getDate(); ?></time>) <?= $comment->getAuthor(); ?> :</p>
         <p><?= $comment->getContent(); ?></p>
         <form method="post" action="index.php?action=moderatecomment">
-            <input type="hidden" name="comment" value="<?= urlencode(serialize($comment)); ?>" />
+            <input type="hidden" name="comment" value="<?= $comment->getIdComment(); ?>" />
             <input type="submit" value="Autoriser" />
         </form>
     <?php endforeach; ?>

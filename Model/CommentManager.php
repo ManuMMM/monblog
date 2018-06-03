@@ -19,7 +19,7 @@ class CommentManager extends Model {
     
     // Get informations of a comment from the database
     public function getComment($idComment) {
-        $sql = 'SELECT COM_DATE as date, COM_AUTHOR as author, COM_CONTENT as content '
+        $sql = 'SELECT COM_ID as idComment, COM_DATE as date, COM_AUTHOR as author, COM_CONTENT as content, BIL_ID as idPost '
              . 'FROM T_COMMENT '
              . 'WHERE COM_ID = ?';
         $comment = $this->executeRequest($sql, array($idComment));

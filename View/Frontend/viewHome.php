@@ -4,7 +4,7 @@
     <article>
         <header>
             <a href="<?= "index.php?action=getPost&id=" . $post->getIdPost(); ?>">
-                <h1 class="titlePost"><?= $post->getTitle(); ?></h1>
+                <h2 class="titlePost"><?= $post->getTitle(); ?></h2>
             </a>
             <time><?= $post->getDate(); ?></time>
         </header>

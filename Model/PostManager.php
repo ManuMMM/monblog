@@ -50,4 +50,13 @@ class PostManager extends Model {
         return $posts;
     }
     
+    // Get the total numbers of posts in the database
+    public function countTotalPosts() {
+        $sql = 'SELECT COUNT(*) AS contenu'
+             . ' FROM T_POST';
+        $req = $this->executeRequest($sql);
+        $numberOfPosts = $req->fetchColumn();
+        return $numberOfPosts;
+    }
+    
 }

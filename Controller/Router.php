@@ -51,14 +51,12 @@ class Router {
                 $this->ctrlPost->addComment(array('author' => $author, 'content' => $content, 'idPost' => $idPost));
             }
             else if ($this->action == 'reportcomment') {
-                $commentUrlEncoded = $this->getParameter($_POST, 'comment');
-                $comment = unserialize(urldecode($commentUrlEncoded));
-                $this->ctrlPost->report($comment);
+                $idComment = $this->getParameter($_POST, 'comment');
+                $this->ctrlPost->report($idComment);
             }
             else if ($this->action == 'moderatecomment') {
-                $commentUrlEncoded = $this->getParameter($_POST, 'comment');
-                $comment = unserialize(urldecode($commentUrlEncoded));
-                $this->ctrlPost->moderate($comment);
+                $idComment = $this->getParameter($_POST, 'comment');
+                $this->ctrlPost->moderate($idComment);
             }
             elseif ($this->action == 'editor') {
                 $idPost = $this->getParameter($_POST, 'id');

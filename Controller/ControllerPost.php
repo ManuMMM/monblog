@@ -10,12 +10,10 @@ class ControllerPost {
 
     private $postManager;
     private $commentManager;
-    private $ctrlHome;
 
     public function __construct() {
         $this->postManager = new PostManager();
         $this->commentManager = new CommentManager();
-        $this->ctrlHome = new ControllerHome();
     }
 
     // Add a new post
@@ -25,7 +23,7 @@ class ControllerPost {
         // Add it into the database
         $this->postManager->addPost($post);
         // Refresh the Admin panel view
-        $this->ctrlHome->adminPanel();
+        header('location:index.php?action=admin');
     }
     
     // Update a post
@@ -43,7 +41,7 @@ class ControllerPost {
         // Delete the object Post in the database
         $this->postManager->deletePost($post);
         // Refresh the Admin panel view
-        $this->ctrlHome->adminPanel();
+        header('location:index.php?action=admin#modifyPost');
     }
     
     // Show the details of a post
@@ -65,7 +63,8 @@ class ControllerPost {
     }
     
     // Report a comment
-    public function report(Comment $comment) {
+    public function report($idComment) {
+        $comment = $this->commentManager->getComment($idComment);
         $comment->reportComment();
         $this->commentManager->flag($comment);
         // Refreshing the post display
@@ -73,11 +72,12 @@ class ControllerPost {
     }
     
     // Allow a comment
-    public function moderate(Comment $comment) {
+    public function moderate($idComment) {
+        $comment = $this->commentManager->getComment($idComment);
         $comment->allowComment();
         $this->commentManager->flag($comment);
         // Refresh the Admin panel view
-        $this->ctrlHome->adminPanel();
+        header('location:index.php?action=admin#moderateComments');
     }
   
 }
