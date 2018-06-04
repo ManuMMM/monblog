@@ -6,10 +6,6 @@
  * @author Manu
  */
 
-require_once 'Controller/ControllerHome.php';
-require_once 'Controller/ControllerPost.php';
-require_once 'View/View.php';
-
 class Router {
     
     private $ctrlHome;
@@ -24,19 +20,50 @@ class Router {
     // Process an incoming request
     public function routeRequest() {
         try {
-            if ($this->action == 'post') {
+            if ($this->action == 'getPost') {
                 $idPost = intval($this->getParameter($_GET, 'id'));
                 if ($idPost != 0) {
-                    $this->ctrlPost->post($idPost);
+                    $this->ctrlPost->getPost($idPost);
                 }
                 else
                   throw new Exception("Invalid post ID");
             }
-            else if ($this->action == 'comment') {
+            elseif ($this->action == 'addpost') {
+                $title = $this->getParameter($_POST, 'title');
+                $content = $this->getParameter($_POST, 'content');
+                $this->ctrlPost->createPost(array('title' => $title, 'content' => $content));
+            }
+            elseif ($this->action == 'updatepost') {
+                $idPost = $this->getParameter($_POST, 'id');
+                $title = $this->getParameter($_POST, 'title');
+                $content = $this->getParameter($_POST, 'content');
+                $this->ctrlPost->updatePost(array('id' => $idPost, 'title' => $title, 'content' => $content));
+            }
+            elseif ($this->action == 'deletepost') {
+                $postUrlEncoded = $this->getParameter($_POST, 'post');
+                $post = unserialize(urldecode($postUrlEncoded));
+                $this->ctrlPost->deletePost($post);
+            }
+            else if ($this->action == 'addcomment') {
                 $author = $this->getParameter($_POST, 'author');
                 $content = $this->getParameter($_POST, 'content');
                 $idPost = $this->getParameter($_POST, 'id');
-                $this->ctrlPost->comment($author, $content, $idPost);
+                $this->ctrlPost->addComment(array('author' => $author, 'content' => $content, 'idPost' => $idPost));
+            }
+            else if ($this->action == 'reportcomment') {
+                $idComment = $this->getParameter($_POST, 'comment');
+                $this->ctrlPost->report($idComment);
+            }
+            else if ($this->action == 'moderatecomment') {
+                $idComment = $this->getParameter($_POST, 'comment');
+                $this->ctrlPost->moderate($idComment);
+            }
+            elseif ($this->action == 'editor') {
+                $idPost = $this->getParameter($_POST, 'id');
+                $this->ctrlHome->editor($idPost);
+            }
+            elseif ($this->action == 'admin') {
+                $this->ctrlHome->adminPanel();
             }
             elseif ($this->action == NULL) {
                 $this->ctrlHome->home();

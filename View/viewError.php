@@ -1,3 +1,3 @@
-<?php $this->title = 'My Blog'; ?>
+<?php $this->title = 'Jean Forteroche'; ?>
 
 <p>An error has occurred : <?= $msgError ?></p>

@@ -94,7 +94,7 @@ class Post {
         }
     }
     
-    // Test if the content is a string and if the length is >1 and <400 & stock it in $_content
+    // Test if the content is a string and if the length is >1 & stock it in $_content
     public function setContent($content) {
         if(is_string($content)){
             if((strlen(utf8_decode($content))) > 1){

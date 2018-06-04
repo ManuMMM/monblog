@@ -14,8 +14,16 @@ class View {
     private $title;
 
     public function __construct($action) {
-        // Determining the name of the view file from the action parameter
-        $this->file = "View/view" . $action . ".php";
+        $directory = array('View/', 'View/Frontend/', 'View/Backend/');
+        // Loop the search in all the specified folders
+        foreach ($directory as $current_dir) {
+            // Determining the name of the view file from the action parameter
+            $file = $current_dir . 'view' . $action .'.php';
+            if(file_exists($file)){                
+                $this->file = $file;
+                return;
+            }
+        }
     }
 
     // Generate and display the view
@@ -32,6 +40,7 @@ class View {
     private function generateFile($file, $data) {
         if (file_exists($file)) {
             // Makes the array elements $data accessible in the view
+            // "Extract()" assign each value to its key, ex: array('a' => 'dog') will result to $a = 'dog'
             extract($data);
             // Turn on output buffering
             ob_start();

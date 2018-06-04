@@ -20,6 +20,15 @@ class Autoloader {
      * @param $class (string): Name of the class to load
      */
     public static function autoload($class){
-        require 'model/'. $class .'.php';
+        // List the differents folders where to look for the class to load
+        $directory = array( 'model/', 'controller/', 'view/');
+        // Loop the search in all the specified folders
+        foreach ($directory as $current_dir) {
+            $file = $current_dir . $class .'.php';
+            if(file_exists($file)){
+                require_once $file;
+                return;
+            }
+        }
     }
 }
