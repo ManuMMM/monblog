@@ -37,9 +37,9 @@ class ControllerPost {
     }
     
     // Delete a post
-    public function deletePost(Post $post) {
+    public function deletePost($idPost) {
         // Delete the object Post in the database
-        $this->postManager->deletePost($post);
+        $this->postManager->deletePost($idPost);
         // Refresh the Admin panel view
         header('location:index.php?action=admin#modifyPost');
     }

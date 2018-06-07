@@ -27,7 +27,7 @@ class View {
     }
 
     // Generate and display the view
-    public function generate($data) {
+    public function generate($data = []) {
         // Generation of the specific part of the view
         $content = $this->generateFile($this->file, $data);
         // Generation of the common template using the specific part

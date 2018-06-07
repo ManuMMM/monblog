@@ -16,7 +16,7 @@ class ControllerHome {
         $this->commentManager = new CommentManager();
     }
 
-    // Show the list of all the posts of the blog
+    // Show the homepage (with the list of all the posts of the blog)
     public function home() {
         $posts = $this->postManager->getPosts();
         $view = new View("Home");

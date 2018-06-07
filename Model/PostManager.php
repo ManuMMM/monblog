@@ -18,9 +18,9 @@ class PostManager extends Model {
     }
     
     // Delete a post in the database
-    public function deletePost(Post $post) {
+    public function deletePost($idPost) {
         $sql = 'DELETE FROM t_post WHERE BIL_ID = ?';
-        $this->executeRequest($sql, array($post->getIdPost()));
+        $this->executeRequest($sql, array($idPost));
     }
 
     // Get informations of a post from the database

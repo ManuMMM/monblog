@@ -34,7 +34,6 @@
         </form>
         <form method="post" action="index.php?action=deletepost">
             <input type="hidden" name="id" value="<?= $post->getIdPost(); ?>" />
-            <input type="hidden" name="post" value="<?= urlencode(serialize($post)); ?>" />
             <input type="submit" value="Supprimer" />
         </form>
     </section>

@@ -7,7 +7,9 @@
         <script>
             tinymce.init({
                 selector: '#txtPost',
-                setup: function (editor) { editor.on('change', function () { editor.save(); }); }
+                setup: function (editor) { editor.on('change', function () { editor.save(); }); },
+                plugins: "wordcount",
+                branding: false
             }); 
         </script>
         <title><?= $title ?></title>   <!-- Specific element -->
@@ -15,7 +17,7 @@
     <body>
         <div id="global">
             <header>
-                <a href="index.php"><h1 id="titleBlog">Jean Forteroche</h1></a>
+                <a href="index.php"><h1 id="titleBlog">Jean Forteroche</h1></a><a href="index.php?action=login">Se connecter</a>
                 <p>Bienvenue sur mon modeste blog.</p>
             </header>
             <div id="content">
