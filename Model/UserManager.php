@@ -35,7 +35,7 @@ class UserManager extends Model {
                     setcookie('session[email]', $_SESSION['session']['email'], time() + 365*24*3600, null, null, false, true);
                     setcookie('session[inscription_date]', $_SESSION['session']['inscription_date'], time() + 365*24*3600, null, null, false, true);
                     setcookie('session[accreditation]', $_SESSION['session']['accreditation'], time() + 365*24*3600, null, null, false, true);
-                }
+                }              
                 return TRUE;
             } else {
                 return FALSE;

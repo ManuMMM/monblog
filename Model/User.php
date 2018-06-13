@@ -115,10 +115,10 @@ class User {
             if($datecheck){
                 $datecheck = $datecheck->format($format);
                 if($datecheck == $date){
-                        $this->_date = $date;
+                        $this->_inscriptionDate = $date;
                 }
             } else {
-                $this->_date = date("Y-m-d H:i:s");
+                $this->_inscriptionDate = date("Y-m-d H:i:s");
             }
         }
     }
