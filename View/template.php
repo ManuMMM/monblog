@@ -27,7 +27,7 @@
             </div>
             <footer id="footerBlog">
                 Blog realisé avec PHP, HTML5 et CSS.
-                <a href="index.php?action=admin">Admin</a>
+                <?php if(isset($_SESSION['session']['accreditation']) && $_SESSION['session']['accreditation'] == 1){ ?> <a href="index.php?action=admin">Admin</a> <?php } ?>
             </footer>
         </div> <!-- #global -->
     </body>
