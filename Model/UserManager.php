@@ -27,7 +27,7 @@ class UserManager extends Model {
                 $_SESSION['session']['inscription_date'] = $user->getInscriptionDate();
                 $_SESSION['session']['token_session'] = $token_session;
                 $_SESSION['session']['accreditation'] = $user->getIdAccreditationLevel();
-                // If the "remember me" is ticked, stock 2 cookies (one )
+                // If the "remember me" is ticked, stock 6 cookies
                 if(isset($_POST['rememberMe']) && $_POST['rememberMe'] == TRUE){
                     setcookie('session[token_session]', $_SESSION['session']['token_session'], time() + 365*24*3600, null, null, false, true);
                     setcookie('session[username]', $_SESSION['session']['username'], time() + 365*24*3600, null, null, false, true);
@@ -66,17 +66,40 @@ class UserManager extends Model {
             // ------------------------------------------------------------------------------------------------
             // -------------------------- Delete all the cookies ----------------------------------------------
             // ------------------------------------------------------------------------------------------------
-        
-            // Delete the session cookies
             // http://php.net/manual/fr/function.setcookie.php
-            if (isset($_COOKIE['session'])) {
-                unset($_COOKIE['session']);
+            
+            if (isset($_COOKIE['session']['token_session'])) {
+                unset($_COOKIE['session']['token_session']);
                 // empty value and old timestamp
-                setcookie('session', '', time() - 3600, null, null, false, true);
+                setcookie('session[token_session]', '', time() - 3600, null, null, false, true);
             }
-            echo 'test';
-            die();
+            if (isset($_COOKIE['session']['username'])) {
+                unset($_COOKIE['session']['username']);
+                // empty value and old timestamp
+                setcookie('session[username]', '', time() - 3600, null, null, false, true);
+            }
+            if (isset($_COOKIE['session']['id'])) {
+                unset($_COOKIE['session']['id']);
+                // empty value and old timestamp
+                setcookie('session[id]', '', time() - 3600, null, null, false, true);
+            }
+            if (isset($_COOKIE['session']['email'])) {
+                unset($_COOKIE['session']['email']);
+                // empty value and old timestamp
+                setcookie('session[email]', '', time() - 3600, null, null, false, true);
+            }
+            if (isset($_COOKIE['session']['inscription_date'])) {
+                unset($_COOKIE['session']['inscription_date']);
+                // empty value and old timestamp
+                setcookie('session[inscription_date]', '', time() - 3600, null, null, false, true);
+            }
+            if (isset($_COOKIE['session']['accreditation'])) {
+                unset($_COOKIE['session']['accreditation']);
+                // empty value and old timestamp
+                setcookie('session[accreditation]', '', time() - 3600, null, null, false, true);
+            }
             // ------------------------------------------------------------------------------------------------
+            
             // Redirection to the homepage
             header('location:index.php?action=');
         }
