@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 13 juin 2018 à 11:46
+-- Généré le :  mer. 13 juin 2018 à 13:32
 -- Version du serveur :  10.1.31-MariaDB
 -- Version de PHP :  7.1.15
 
@@ -239,7 +239,7 @@ CREATE TABLE `t_users` (
 --
 
 INSERT INTO `t_users` (`id`, `username`, `password_hash`, `email`, `inscription_date`, `token_session`, `accreditation_id`) VALUES
-(1, 'superadmin', '$2y$10$LLrizpRyMdFvcVh8CjzBWu284GmZB6yhX9wDWHb.xOMGHeTwLsZJ6', 'serve.emmanuel@gmail.com', '2018-06-12', '$2y$10$BuQxVz7lQY4T4YSX03vBVuwGvErhJv3KPf.1..k7ML/TJL5PccH8q', 1);
+(1, 'superadmin', '$2y$10$EnIlhDhNyJDc9kfCThED5Owht79dCE5szUQE64r6Ey5Ov2nHLjbdi', 'serve.emmanuel@gmail.com', '2018-06-13', '$2y$10$OQixWI3cAQ6CU8kXocoXkOhTlkRlOBbi/mzxfWZk.j.NDvoUx0d5C', 7);
 
 --
 -- Index pour les tables déchargées
