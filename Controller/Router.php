@@ -16,14 +16,13 @@ class Router {
         $this->ctrlPost = new ControllerPost();
         $this->ctrlRegister = new ControllerRegister();
         $this->action = $this->getParameter($_GET, 'action');
-        $this->permission = $this->getParameter($_SESSION, 'permission');
+        $this->accreditation = $this->getParameter($_SESSION['session'], 'accreditation');
     }
 
     // Process an incoming request
     public function routeRequest() {
-        try {
-            $_SESSION['permission'] = 1;
-            switch ($this->permission) {
+        try {            
+            switch ($this->accreditation) {
                 // Admin
                 case 1:
                     switch ($this->action) {
@@ -32,7 +31,7 @@ class Router {
                             $title = $this->getParameter($_POST, 'title');
                             $content = $this->getParameter($_POST, 'content');
                             $this->ctrlPost->createPost(array('title' => $title, 'content' => $content));
-                            break 2; // Eand the switch ($this->action) and the switch ($this->permission)
+                            break 2; // End the switch ($this->action) and the switch ($this->permission)
                                                 
                         // UPDATE (post)
                         case "updatepost":
@@ -40,30 +39,30 @@ class Router {
                             $title = $this->getParameter($_POST, 'title');
                             $content = $this->getParameter($_POST, 'content');
                             $this->ctrlPost->updatePost(array('id' => $idPost, 'title' => $title, 'content' => $content));
-                            break 2; // Eand the switch ($this->action) and the switch ($this->permission)
+                            break 2; // End the switch ($this->action) and the switch ($this->permission)
                         
                         // DELETE (post)
                         case "deletepost":
                             $idPost = $this->getParameter($_POST, 'id');
                             $this->ctrlPost->deletePost($idPost);
-                            break 2; // Eand the switch ($this->action) and the switch ($this->permission)
+                            break 2; // End the switch ($this->action) and the switch ($this->permission)
                         
                         // MODERATE (comment)                        
                         case "moderatecomment":
                             $idComment = $this->getParameter($_POST, 'comment');
                             $this->ctrlPost->moderate($idComment);
-                            break 2; // Eand the switch ($this->action) and the switch ($this->permission)
+                            break 2; // End the switch ($this->action) and the switch ($this->permission)
                         
                         // SHOW THE EDITOR (post)
                         case "editor":
                             $idPost = $this->getParameter($_POST, 'id');
                             $this->ctrlHome->editor($idPost);
-                            break 2; // Eand the switch ($this->action) and the switch ($this->permission)
+                            break 2; // End the switch ($this->action) and the switch ($this->permission)
                         
                         // SHOW THE ADMIN PANEL
                         case "admin":
                             $this->ctrlHome->adminPanel();
-                            break 2; // Eand the switch ($this->action) and the switch ($this->permission)
+                            break 2; // End the switch ($this->action) and the switch ($this->permission)
                     }
                 
                 // Lambda User (or not logged)
@@ -95,13 +94,18 @@ class Router {
                             break;
                         
                         // SHOW THE LOGIN PAGE
-                        case "login":
-                            $this->ctrlRegister->logIn();
+                        case "loginpage":
+                            $this->ctrlHome->logInPage();
                             break;
                         
                         // SHOW THE SIGNIN PAGE
-                        case "signin":
-                            $this->ctrlRegister->signIn();
+                        case "signinpage":
+                            $this->ctrlHome->signInPage();
+                            break;
+                        
+                        // LOG OUT
+                        case "logout":
+                            $this->ctrlRegister->logout();
                             break;
                         
                         // SHOW THE SIGNIN PAGE

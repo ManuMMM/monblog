@@ -23,7 +23,7 @@
 <?php foreach ($comments as $comment): ?>
     <article>
         <p>(<time><?= $comment->getDate(); ?></time>) <?= $comment->getAuthor(); ?> :</p>
-        <p><?php if($comment->getFlag() == FALSE){echo($comment->getContent());} else {echo 'Commentaire en attente de modération';} ?></p>
+        <p><?php if($comment->getFlag() == FALSE){echo(preg_replace('/(?:\s*<br[^>]*>\s*){2,}/s', "<br>", nl2br(htmlspecialchars(trim($comment->getContent()), ENT_QUOTES))));} else {echo 'Commentaire en attente de modération';} ?></p>
         <form method="post" action="index.php?action=reportcomment">
             <input type="hidden" name="comment" value="<?= $comment->getIdComment(); ?>" />
             <input type="submit" value="Signaler"<?php if($comment->getFlag() !== FALSE){?> disabled<?php } ?>/>

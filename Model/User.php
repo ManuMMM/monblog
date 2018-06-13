@@ -7,18 +7,19 @@
  */
 
 /**
- * Description of Admin
+ * Description of User
  *
  * @author Manu
  */
-abstract class User {
+class User {
     
-    protected $_id;
-    protected $_username;
-    protected $_email;
-    protected $_inscriptionDate;
-    protected $_tokenConnexion;
-    protected $_idCategory;
+    private $_id;
+    private $_username;
+    private $_passwordHash;
+    private $_email;
+    private $_inscriptionDate;
+    private $_tokenSession;
+    private $_idAccreditationLevel;
     
     // Contructor //
     
@@ -52,6 +53,10 @@ abstract class User {
         return $this->_username;
     }
     
+    public function getPasswordHash() {
+        return $this->_passwordHash;
+    }
+    
     public function getEmail() {
         return $this->_email;
     }
@@ -60,12 +65,12 @@ abstract class User {
         return $this->_inscriptionDate;
     }
     
-    public function getTokenConnexion() {
-        return $this->_tokenConnexion;
+    public function getTokenSession() {
+        return $this->_tokenSession;
     }
     
-    public function getIdCategory() {
-        return $this->_idCategory;
+    public function getIdAccreditationLevel() {
+        return $this->_idAccreditationLevel;
     }
     
     // SETTERS //
@@ -87,9 +92,16 @@ abstract class User {
         }
     }
     
-    // Test if the $email has the right format & stock it in $_email
+    // Test if the $passwordHash is a string and stock it in $_password    
+    public function setPasswordHash($passwordHash = NULL) {
+        if(is_string($passwordHash)){
+            $this->_passwordHash = $passwordHash;
+        }
+    }
+    
+    // Test if the $email has the right format & and if true, stock it in $_email
     public function setEmail($email) {
-        if(preg_match("#^[a-z0-9._-]+@[a-z0-9._-]{2,}\.[a-z]{2,4}$#", $email)) {
+        if(filter_var($email, FILTER_VALIDATE_EMAIL, FILTER_FLAG_EMAIL_UNICODE)) {
             $this->_email = $email;
         }
     }
@@ -111,19 +123,19 @@ abstract class User {
         }
     }
     
-    // Test if the $token_connection a string and if the length is > 1 and <= 255 & stock it in $_tokenConnection
-    public function setTokenConnexion($token_connexion) {
-        if(is_string($token_connexion)){
-            if((strlen(utf8_decode($token_connexion))) > 1 && (strlen(utf8_decode($token_connexion))) <= 255){
-                $this->_tokenConnexion = $token_connexion;
+    // Test if the $token_session a string and if the length is > 1 and <= 255 & stock it in $_tokenSession
+    public function setTokenSession($token_session) {
+        if(is_string($token_session)){
+            if((strlen(utf8_decode($token_session))) > 1 && (strlen(utf8_decode($token_session))) <= 255){
+                $this->_tokenSession = $token_session;
             }
         }
     }
     
-    // Test if the $idCategory is an integrer & stock it in $_idCategory
-    public function setIdCategory($idCategory) {
-        $ID = (int) $idCategory;
-        $this->_idCategory = $ID;
+    // Test if the $idaccreditationlevel is an integrer & stock it in $_idaccreditationlevel
+    public function setIdAccreditationLevel($idaccreditationlevel = 7) {
+        $ID = (int) $idaccreditationlevel;
+        $this->_idAccreditationLevel = $ID;
     }
     
 }

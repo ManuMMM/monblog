@@ -8,16 +8,15 @@
 
 class ControllerRegister {
     
-    // Show the signin page
-    public function signIn() {
-        $view = new View('inscription');
-        $view->generate();
+    private $userManager;
+
+    public function __construct() {
+        $this->userManager = new UserManager();
     }
     
-    // Show the signin page
-    public function logIn() {
-        $view = new View('login');
-        $view->generate();
+    // Log out
+    public function logout() {
+        $this->userManager->logout();
     }
     
 }

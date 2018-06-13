@@ -3,56 +3,129 @@
 class UserManager extends Model {
     
     public function signin(User $user) {
-        
+        $sql = 'INSERT INTO t_users(username, password_hash, email, inscription_date, accreditation_id) VALUES(?, ?, ?, NOW(), ?)';
+        $this->executeRequest($sql, [$user->getUsername(), $user->getPasswordHash(), $user->getEmail(), 7]);
     }
     
-    public function login(User $user) {
-        // Check if the username & password are correct & then, grant access
-        $sql = 'SELECT * FROM t_users WHERE username = ?';
-        $req = $this->executeRequest($sql, $user->getUsername());
-        $count = $req->rowCount(); // Do rowCount() on the request, it returns a value > 0 if there is a match. We stock in a variable $count
-        if($count != 0){            
-            $data = $req->fetch();  // Access to the first result line
-            $passwordhash = $data['passwordhash'];
+    // Check if the username & password are correct & then, grant access
+    public function login($username, $password) {
+        $user = $this->getUser($username);
+        if(isset($user)){
+            $passwordhash = $user->getPasswordHash();
             // Check if the password is correct
-            if($this->verify($user->getPassword(), $passwordhash)){
+            if($this->verify($password, $passwordhash)){
                 // Create a token
-                $token_connection = $this->token();
+                $token_session = $this->token();
                 // Save its hash in the database under the username profile
-                $token_connection_hash = $this->hash($token_connection);
-                $sql = 'UPDATE t_users SET token_connection = ? WHERE username = ?';
-                $req = $this->executeRequest($sql, [$token_connection, $user->getUsername()]);
+                $token_session_hash = $this->hash($token_session);
+                $sql = 'UPDATE t_users SET token_session = ? WHERE username = ?';
+                $req = $this->executeRequest($sql, [$token_session_hash, $user->getUsername()]);
                 // Save the current profile in session variables
-                $_SESSION['id'] = $data['id'];
-                $_SESSION['username'] = $user->getUsername();
-                $_SESSION['email'] = $data['email'];
-                $_SESSION['inscription_date'] = $data['inscription_date'];
-                $_SESSION['token_connexion'] = $token_connection;
-                $_SESSION['id_category'] = $data['id_category'];
+                $_SESSION['session']['id'] = $user->getId();
+                $_SESSION['session']['username'] = $user->getUsername();
+                $_SESSION['session']['email'] = $user->getEmail();
+                $_SESSION['session']['inscription_date'] = $user->getInscriptionDate();
+                $_SESSION['session']['token_session'] = $token_session;
+                $_SESSION['session']['accreditation'] = $user->getIdAccreditationLevel();
                 // If the "remember me" is ticked, stock 2 cookies (one )
-                if($_POST['rememberMe']){
-                    setcookie('tokenSession', $token_connection, time() + 365*24*3600, null, null, false, true);
-                    setcookie('username', $user->getUsername(), time() + 365*24*3600, null, null, false, true);
+                if(isset($_POST['rememberMe']) && $_POST['rememberMe'] == TRUE){
+                    setcookie('session[token_session]', $_SESSION['session']['token_session'], time() + 365*24*3600, null, null, false, true);
+                    setcookie('session[username]', $_SESSION['session']['username'], time() + 365*24*3600, null, null, false, true);
+                    setcookie('session[id]', $_SESSION['session']['id'], time() + 365*24*3600, null, null, false, true);
+                    setcookie('session[email]', $_SESSION['session']['email'], time() + 365*24*3600, null, null, false, true);
+                    setcookie('session[inscription_date]', $_SESSION['session']['inscription_date'], time() + 365*24*3600, null, null, false, true);
+                    setcookie('session[accreditation]', $_SESSION['session']['accreditation'], time() + 365*24*3600, null, null, false, true);
                 }
+                return TRUE;
+            } else {
+                return FALSE;
             }
+        }
+        else {
+            return FALSE;
         }
     }
     
-    public function logout(User $user) {
-        // Log out
-    }
+    // Log out (unset the current session & destroy cookies)
+    public function logout() {
+        // If connected, deconnection & redirection to the homepage
+        if(isset($_SESSION['session'])){
+            // ------------------------------------------------------------------------------------------------
+            // -------------------------- Delete session variables & the session ------------------------------
+            // ------------------------------------------------------------------------------------------------
+            // Unset all of the session variables.
+            $_SESSION = array();
+            // If it's desired to kill the session, also delete the session cookie.
+            // Note: This will destroy the session, and not just the session data!
+            if (ini_get("session.use_cookies")) {
+                $params = session_get_cookie_params();
+                setcookie(session_name(), '', time() - 42000, $params["path"], $params["domain"], $params["secure"], $params["httponly"]);
+            }
+            // Destroy the session.
+            session_destroy();
+            // ------------------------------------------------------------------------------------------------
+            // -------------------------- Delete all the cookies ----------------------------------------------
+            // ------------------------------------------------------------------------------------------------
         
-    public function delete(User $user) {
-        
+            // Delete the session cookies
+            // http://php.net/manual/fr/function.setcookie.php
+            if (isset($_COOKIE['session'])) {
+                unset($_COOKIE['session']);
+                // empty value and old timestamp
+                setcookie('session', '', time() - 3600, null, null, false, true);
+            }
+            echo 'test';
+            die();
+            // ------------------------------------------------------------------------------------------------
+            // Redirection to the homepage
+            header('location:index.php?action=');
+        }
     }
     
+    public function getUser($username) {
+        $sql = 'SELECT id, username, password_hash as passwordHash, email, inscription_date as inscriptionDate, token_session as TokenSession, accreditation_id as idAccreditationLevel'
+             . ' FROM t_users'
+             . ' WHERE username = ?';
+        $req = $this->executeRequest($sql, array($username));
+        if ($req->rowCount() == 1){
+            $data = $req->fetch();  // Access to the first result line
+            return new User($data);
+        }else{
+            throw new Exception("Pas d'identifiant correspondant à '$username'");
+        }
+    }
+            
+    public function delete(User $user) {
+        // Delete an user
+    }
+    
+    // Check if the Username is already existing in the database, return false if any result found, otherwise return true.
+    public function validUsername($username) {
+        $sql = 'SELECT * FROM t_users WHERE username = ?';
+        $req = $this->executeRequest($sql, [$username]);
+        if ($req->rowCount() == 0){
+            return TRUE;
+        }
+        else {
+            return FALSE;
+        }
+    }
+    
+    public function modifyAccreditationLevel(User $user) {
+        // Give or remove permission(s) to the specified User
+    }
+
+    public function editUsername(User $user) {
+        // Allow to modify an Username
+    }
+
     private function token($length = 64) {
         // Create a token of the given length
         $token = bin2hex(random_bytes($length));
-        return $token_connection;
+        return $token;
     }
     
-    private function verify(string $string, $hash) {
+    public function verify(string $string, $hash) {
         // Comparing input string hash with the database hash and returning it
         return (password_verify ($string , $hash));
     }

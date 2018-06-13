@@ -37,5 +37,17 @@ class ControllerHome {
         $view = new View("EditPost");
         $view->generate(array('post' => $post));
     }
+        
+    // Show the signin page
+    public function signInPage() {
+        $view = new View('inscription');
+        $view->generate();
+    }
+    
+    // Show the signin page
+    public function logInPage() {
+        $view = new View('login');
+        $view->generate();
+    }
     
 }

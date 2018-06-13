@@ -17,7 +17,7 @@
     <body>
         <div id="global">
             <header>
-                <a href="index.php"><h1 id="titleBlog">Jean Forteroche</h1></a><a href="index.php?action=login">Se connecter</a>
+                <a href="index.php"><h1 id="titleBlog">Jean Forteroche</h1></a><?php if(isset($_SESSION['session']['username'])){ echo $_SESSION['session']['username'].' '; ?> <a href="index.php?action=logout">Se déconnecter</a> <?php } else {?> <a href="index.php?action=loginpage">Se connecter</a> <?php } ?>
                 <p>Bienvenue sur mon modeste blog.</p>
             </header>
             <div id="content">
