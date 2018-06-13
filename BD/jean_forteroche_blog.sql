@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 06 juin 2018 à 11:27
+-- Généré le :  mer. 13 juin 2018 à 11:46
 -- Version du serveur :  10.1.31-MariaDB
 -- Version de PHP :  7.1.15
 
@@ -21,6 +21,77 @@ SET time_zone = "+00:00";
 --
 -- Base de données :  `jean_forteroche_blog`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `t_accreditation`
+--
+
+CREATE TABLE `t_accreditation` (
+  `accreditation_id` int(11) NOT NULL,
+  `accreditation_level` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `t_accreditation`
+--
+
+INSERT INTO `t_accreditation` (`accreditation_id`, `accreditation_level`) VALUES
+(1, 'Admin'),
+(2, 'Editor'),
+(3, 'Author'),
+(4, 'Moderator'),
+(5, 'Contributor'),
+(6, 'Member'),
+(7, 'Guest');
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `t_accreditation_permissions`
+--
+
+CREATE TABLE `t_accreditation_permissions` (
+  `id` int(11) NOT NULL,
+  `accreditation_id` int(11) NOT NULL,
+  `permission_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `t_accreditation_permissions`
+--
+
+INSERT INTO `t_accreditation_permissions` (`id`, `accreditation_id`, `permission_id`) VALUES
+(1, 1, 1),
+(2, 1, 2),
+(3, 1, 3),
+(4, 1, 4),
+(5, 1, 5),
+(6, 1, 6),
+(7, 1, 7),
+(8, 1, 8),
+(9, 1, 9),
+(10, 1, 10),
+(11, 1, 11),
+(12, 1, 12),
+(13, 1, 13),
+(14, 1, 14),
+(15, 1, 15),
+(16, 1, 16),
+(17, 1, 17),
+(18, 1, 18),
+(19, 1, 19),
+(20, 1, 20),
+(21, 7, 1),
+(22, 7, 2),
+(23, 7, 3),
+(24, 7, 5),
+(25, 7, 8),
+(26, 7, 14),
+(27, 7, 15),
+(28, 7, 17),
+(29, 7, 19);
 
 -- --------------------------------------------------------
 
@@ -67,7 +138,54 @@ INSERT INTO `t_comment` (`COM_ID`, `COM_DATE`, `COM_AUTHOR`, `COM_CONTENT`, `BIL
 (29, '2018-06-03 17:02:07', 'fff', 'fff', 2, 0),
 (30, '2018-06-03 17:03:15', 'fff', 'fff', 2, 0),
 (31, '2018-06-03 17:36:02', 'Moi', 'Il marche bien l\'éditeur Tinymce !', 70, 0),
-(32, '2018-06-06 11:23:24', 'fff', 'fff', 85, 1);
+(35, '2018-06-08 23:50:50', 'vvvv', 'vvr\r\n\r\nree', 82, 0),
+(36, '2018-06-08 23:55:19', 'Martin', 'ff\r\nff\r\n\r\nrr', 82, 0),
+(37, '2018-06-08 23:55:29', 'fff', '\r\n\r\n\r\n\r\n\r\n\r\n\r\nffff', 82, 0),
+(38, '2018-06-09 00:02:07', 'Yoooooooooo', '   \r\n\r\nyyy\r\n\r\n\r\n   ', 82, 0),
+(39, '2018-06-09 00:21:57', 'popoop', 'p\'rtty et \"etre\" ou juste \' \" \'', 82, 0),
+(40, '2018-06-09 00:23:28', 'Martin', 'dadad \' et \" dadada', 82, 0),
+(41, '2018-06-09 00:41:16', '2323', '\r\n     nnn   \r\n\r\nppp^^^  \'\'\'   \r\n\r\n\r\n\"\"  ffe  \r\n\r\n\r\n\r\n', 82, 0),
+(42, '2018-06-09 00:41:36', '13', 'mmm\r\nmmm\r\nmmm\r\nmmm', 82, 0),
+(43, '2018-06-09 00:44:39', 'Martin', '\r\n\r\nzzz\r\n\r\nzzz\r\n\r\nzzz\r\n\r\n', 82, 0),
+(44, '2018-06-12 17:33:32', 'O\'brien', 'yup !   \r\n\r\n\r\n\r\n\r\nv', 82, 0),
+(45, '2018-06-12 17:34:13', 'Tab \" yup', '\r\n\r\n\r\n\r\n\r\n\r\nccc    Ok   \r\n\r\n\r\n\r\nc\r\n\r\n\r\n', 82, 0);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `t_permissions`
+--
+
+CREATE TABLE `t_permissions` (
+  `permission_id` int(11) NOT NULL,
+  `permission_name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `t_permissions`
+--
+
+INSERT INTO `t_permissions` (`permission_id`, `permission_name`) VALUES
+(1, 'Create Own Comment'),
+(2, 'Read Any Comment'),
+(3, 'Update Own Comment'),
+(4, 'Update Any Comment'),
+(5, 'Delete Own Comment'),
+(6, 'Delete Any Comment'),
+(7, 'Create Own Post'),
+(8, 'Read Any Post'),
+(9, 'Update Own Post'),
+(10, 'Update Specific Post'),
+(11, 'Update Any Post'),
+(12, 'Delete Own Post'),
+(13, 'Delete Any Post'),
+(14, 'Create Own User'),
+(15, 'Read Own User'),
+(16, 'Read Any User'),
+(17, 'Update Own User'),
+(18, 'Update Any User'),
+(19, 'Delete Own User'),
+(20, 'Delete Any User');
 
 -- --------------------------------------------------------
 
@@ -98,8 +216,7 @@ INSERT INTO `t_post` (`BIL_ID`, `BIL_DATE`, `BIL_TITLE`, `BIL_CONTENT`) VALUES
 (76, '2018-06-03 18:53:51', 'Lmo', '<figure class=\"image\" style=\"text-align: center;\"><img style=\"width: 71px; height: 124px;\" src=\"http://www.babaloons.com/nocalcharacters/images/lmo.JPG\" alt=\"Lmo\" width=\"185\" height=\"323\" />\r\n<figcaption>Weird</figcaption>\r\n</figure>\r\n<p style=\"text-align: left;\">&nbsp;</p>'),
 (77, '2018-06-03 19:13:16', 'Test video', '<p><iframe src=\"//www.youtube.com/embed/ArCqlpGVcIs\" width=\"560\" height=\"314\" allowfullscreen=\"allowfullscreen\"></iframe></p>'),
 (78, '2018-06-03 21:12:46', 'Test', '<p><span style=\"font-size: 72pt;\">non</span></p>'),
-(82, '2018-06-04 00:04:36', 'Test code php', '<p>Bonjour,</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<pre class=\"language-php\"><code>&lt;?php $this-&gt;title = \'Jean Forteroche\'; ?&gt;\r\n\r\n&lt;p&gt;An error has occurred : &lt;?= $msgError ?&gt;&lt;/p&gt;</code></pre>'),
-(85, '2018-06-06 11:13:59', 'ccc', '<p style=\"text-align: center;\"><em><strong>cccc</strong></em></p>');
+(82, '2018-06-04 00:04:36', 'Test code php', '<p>Bonjour,</p>\r\n<p>&nbsp;</p>\r\n<p>&nbsp;</p>\r\n<pre class=\"language-php\"><code>&lt;?php $this-&gt;title = \'Jean Forteroche\'; ?&gt;\r\n\r\n&lt;p&gt;An error has occurred : &lt;?= $msgError ?&gt;&lt;/p&gt;</code></pre>');
 
 -- --------------------------------------------------------
 
@@ -110,16 +227,35 @@ INSERT INTO `t_post` (`BIL_ID`, `BIL_DATE`, `BIL_TITLE`, `BIL_CONTENT`) VALUES
 CREATE TABLE `t_users` (
   `id` int(11) NOT NULL,
   `username` varchar(30) NOT NULL,
-  `passwordhash` varchar(255) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `inscription_date` date NOT NULL,
-  `token_connexion` varchar(255) NOT NULL,
-  `id_category` int(11) NOT NULL
+  `token_session` varchar(255) NOT NULL,
+  `accreditation_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `t_users`
+--
+
+INSERT INTO `t_users` (`id`, `username`, `password_hash`, `email`, `inscription_date`, `token_session`, `accreditation_id`) VALUES
+(1, 'superadmin', '$2y$10$LLrizpRyMdFvcVh8CjzBWu284GmZB6yhX9wDWHb.xOMGHeTwLsZJ6', 'serve.emmanuel@gmail.com', '2018-06-12', '$2y$10$BuQxVz7lQY4T4YSX03vBVuwGvErhJv3KPf.1..k7ML/TJL5PccH8q', 1);
 
 --
 -- Index pour les tables déchargées
 --
+
+--
+-- Index pour la table `t_accreditation`
+--
+ALTER TABLE `t_accreditation`
+  ADD PRIMARY KEY (`accreditation_id`);
+
+--
+-- Index pour la table `t_accreditation_permissions`
+--
+ALTER TABLE `t_accreditation_permissions`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Index pour la table `t_comment`
@@ -127,6 +263,12 @@ CREATE TABLE `t_users` (
 ALTER TABLE `t_comment`
   ADD PRIMARY KEY (`COM_ID`),
   ADD KEY `fk_com_bil` (`BIL_ID`);
+
+--
+-- Index pour la table `t_permissions`
+--
+ALTER TABLE `t_permissions`
+  ADD PRIMARY KEY (`permission_id`);
 
 --
 -- Index pour la table `t_post`
@@ -145,22 +287,40 @@ ALTER TABLE `t_users`
 --
 
 --
+-- AUTO_INCREMENT pour la table `t_accreditation`
+--
+ALTER TABLE `t_accreditation`
+  MODIFY `accreditation_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT pour la table `t_accreditation_permissions`
+--
+ALTER TABLE `t_accreditation_permissions`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+
+--
 -- AUTO_INCREMENT pour la table `t_comment`
 --
 ALTER TABLE `t_comment`
-  MODIFY `COM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `COM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT pour la table `t_permissions`
+--
+ALTER TABLE `t_permissions`
+  MODIFY `permission_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pour la table `t_post`
 --
 ALTER TABLE `t_post`
-  MODIFY `BIL_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `BIL_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=83;
 
 --
 -- AUTO_INCREMENT pour la table `t_users`
 --
 ALTER TABLE `t_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Contraintes pour les tables déchargées
