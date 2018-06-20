@@ -14,12 +14,18 @@ html, body {
 
 body {
     color: #bfbfbf;
-    background: black;
+    background-image: url('images/background-alaska.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: 'Futura-Medium', 'Futura', 'Trebuchet MS', sans-serif;
 }
 
 h1, h2 {
     color: white;
+}
+
+#logo{
+    width: 50px;
 }
 
 .titlePost {
@@ -28,13 +34,16 @@ h1, h2 {
 
 #global {
     min-height: 100%;
-    background: #333534;
+    background: rgba(51, 53, 52, 0.7);
     width: 70%;
     margin: auto;
     text-align: justify;
-    padding: 5px 20px;
 }
 
+#globalMargin {
+    padding: 5px 20px;
+}
+    
 #content {
     margin-bottom : 30px;
 }
@@ -64,7 +73,19 @@ time {
     height: 100vh;
 }
 
-/* TinyMCE part */
+/* -------------------------------------------------------------------------- */
+/* ------------------ Fix for the nav when modal is open ---------------------*/
+/* -------------(bootstrap add a padding-right & margin-right)----------------*/
+/* -------------------------------------------------------------------------- */
+
+nav#navigationMenu{
+    padding-right: 1em!important;
+    margin-right: 0px!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------------ TinyMCE part ------------------------------ */
+/* -------------------------------------------------------------------------- */
 
 pre {
     background-color: #272822;
@@ -72,29 +93,83 @@ pre {
     padding: 1em;
 }
 
-/*
-figure.image {
-    display: inline-block;
-    border: 1px solid gray;
-    margin: 0 2px 0 1px;
-    background: #f5f2f0;
+/* -------------------------------------------------------------------------- */
+/* ------------------------------ Modal login ------------------------------- */
+/* -------------------------------------------------------------------------- */
+
+.modal-login {
+        color: #636363;
+        width: auto;
+        justify-content: center;
+}
+.modal-login .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+}
+.modal-login .modal-header {
+        border-bottom: none;
+        position: relative;
+        justify-content: center;
+}
+.modal-login h4 {
+        text-align: center;
+        font-size: 26px;
+}
+.modal-login  .form-group {
+        position: relative;
+}
+.modal-login i {
+        position: absolute;
+        left: 13px;
+        top: 11px;
+        font-size: 18px;
+}
+.modal-login .form-control {
+        padding-left: 40px;
+}
+.modal-login .form-control:focus {
+        border-color: #00ce81;
+}
+.modal-login .form-control, .modal-login .btn {
+        min-height: 40px;
+        border-radius: 3px; 
+}
+.modal-login .hint-text {
+        text-align: center;
+        padding-top: 10px;
+}
+.modal-login .close {
+position: absolute;
+        top: -5px;
+        right: -5px;
+}
+.modal-login .btn {
+        line-height: normal;
+}
+.modal-login .modal-footer {
+        background: #ecf0f1;
+        border-color: #dee4e7;
+        text-align: center;
+        margin: 0 -20px -20px;
+        border-radius: 5px;
+        font-size: 13px;
+}
+.modal-login .modal-footer a {
+        color: #999;
 }
 
-figure.align-left {
-    float: left;
+.modal-footer {
+    justify-content: space-around;
 }
 
-figure.align-right {
-    float: right;
+.modal-footer p {
+    margin-bottom: 0px;
 }
 
-figure.image img {
-    margin: 8px 8px 0 8px;
+#messageSuccess{
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
-
-figure.image figcaption {
-    margin: 6px 8px 6px 8px;
-    text-align: center;
-}
-
-*/

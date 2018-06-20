@@ -98,9 +98,32 @@ class Router {
                             $this->ctrlHome->logInPage();
                             break;
                         
+                        // LOGIN
+                        case "login":
+                            $username = $this->getParameter($_POST, 'username');
+                            $password = $this->getParameter($_POST, 'password');
+                            $this->ctrlRegister->login($username, $password);
+                            break;
+                        
                         // SHOW THE SIGNIN PAGE
                         case "signinpage":
                             $this->ctrlHome->signInPage();
+                            break;
+                        
+                        // SIGNIN
+                        case "signin":
+                            $username = $this->getParameter($_POST, 'username');
+                            $password = $this->getParameter($_POST, 'password');
+                            $passwordConfirmation = $this->getParameter($_POST, 'passwordConfirmation');
+                            $email = $this->getParameter($_POST, 'email');
+                            $this->ctrlRegister->signin($username, $password, $passwordConfirmation, $email);
+                            break;
+                        
+                        // VERIFY THE EMAIL THROUGH THE ACTIVATION LINK
+                        case "emailactivation":
+                            $username = $this->getParameter($_GET, 'username');
+                            $token_session = $this->getParameter($_GET, 'key');
+                            $this->ctrlRegister->activation($username, $token_session);
                             break;
                         
                         // LOG OUT

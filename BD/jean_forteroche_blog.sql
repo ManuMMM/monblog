@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1
--- Généré le :  mer. 13 juin 2018 à 13:55
+-- Généré le :  mer. 20 juin 2018 à 10:57
 -- Version du serveur :  10.1.31-MariaDB
 -- Version de PHP :  7.1.15
 
@@ -148,7 +148,9 @@ INSERT INTO `t_comment` (`COM_ID`, `COM_DATE`, `COM_AUTHOR`, `COM_CONTENT`, `BIL
 (42, '2018-06-09 00:41:36', '13', 'mmm\r\nmmm\r\nmmm\r\nmmm', 82, 0),
 (43, '2018-06-09 00:44:39', 'Martin', '\r\n\r\nzzz\r\n\r\nzzz\r\n\r\nzzz\r\n\r\n', 82, 0),
 (44, '2018-06-12 17:33:32', 'O\'brien', 'yup !   \r\n\r\n\r\n\r\n\r\nv', 82, 0),
-(45, '2018-06-12 17:34:13', 'Tab \" yup', '\r\n\r\n\r\n\r\n\r\n\r\nccc    Ok   \r\n\r\n\r\n\r\nc\r\n\r\n\r\n', 82, 0);
+(45, '2018-06-12 17:34:13', 'Tab \" yup', '\r\n\r\n\r\n\r\n\r\n\r\nccc    Ok   \r\n\r\n\r\n\r\nc\r\n\r\n\r\n', 82, 0),
+(46, '2018-06-17 03:32:13', 'uu', 'uu', 82, 0),
+(47, '2018-06-17 03:32:48', 'uu', 'uu', 78, 0);
 
 -- --------------------------------------------------------
 
@@ -239,7 +241,84 @@ CREATE TABLE `t_users` (
 --
 
 INSERT INTO `t_users` (`id`, `username`, `password_hash`, `email`, `inscription_date`, `token_session`, `accreditation_id`) VALUES
-(1, 'superadmin', '$2y$10$EnIlhDhNyJDc9kfCThED5Owht79dCE5szUQE64r6Ey5Ov2nHLjbdi', 'serve.emmanuel@gmail.com', '2018-06-13', '$2y$10$h2o9UXyuo9k7cmf9eXiyaOALxR2zLYfGvt8lyEYCya8T5ieUv6L4K', 1);
+(1, 'superadmin', '$2y$10$EnIlhDhNyJDc9kfCThED5Owht79dCE5szUQE64r6Ey5Ov2nHLjbdi', 'serve.emmanuel@gmail.com', '2018-06-13', '$2y$10$ADRq/Vq9DI.fZn0U06CP2ex0otTRMEUkF/LaQzfJ.8XwM9nOZAr.6', 1),
+(2, 'Testemail background 11', '$2y$10$GdA0L9cgeE4K9bz6j6sqY..JPobrNJgFNPUIcSmCPMLW1zPkOX2ti', 'serve.emmanuel@gmail.com', '2018-06-19', '', 7),
+(3, 'Testemail background 12', '$2y$10$GOSVCWikY0910.CAqDstSeCmp2FCfFIhLf2s4/3XrOjV1H/0g.mKq', 'serve.emmanuel@gmail.com', '2018-06-20', '', 7),
+(4, 'Testemail background 13', '$2y$10$pF2gk74rdCrb85hVaHTOs.96l6l04MsL3Osu6PYjS9Sk24bBmx0RW', 'serve.emmanuel@gmail.com', '2018-06-20', '', 7),
+(5, 'Testemail background 14', '$2y$10$N/DO06JQy0WmsrI1GH3rGuowLZR987LkK.9fZwSBenxas8vQPP2Zm', 'serve.emmanuel@gmail.com', '2018-06-20', '', 7),
+(6, 'Testemail background 15', '$2y$10$acnk5jDC2Vi3PQMbrVcIf.V/rmVMdf1uF9hNLDw96zbDnRQwfi5Ve', 'serve.emmanuel@gmail.com', '2018-06-20', '', 7),
+(7, 'Testemail background 16', '$2y$10$fBKp1lntjNY8nPNyNa5pm.eVrrGouifN.HesRJ7.HckgdTiVpuyKy', 'serve.emmanuel@gmail.com', '2018-06-20', '', 7),
+(8, 'Testemail background 17', '$2y$10$1YyyRdgpS.kt8DGNST6vYewx6Slfl1lvAwNfglcyJF7EQcLw6mtYS', 'serve.emmanuel@gmail.com', '2018-06-20', '', 7);
+
+-- --------------------------------------------------------
+
+--
+-- Structure de la table `t_users_temporary`
+--
+
+CREATE TABLE `t_users_temporary` (
+  `id` int(11) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `inscription_date` date NOT NULL,
+  `token_session` varchar(255) NOT NULL,
+  `accreditation_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Déchargement des données de la table `t_users_temporary`
+--
+
+INSERT INTO `t_users_temporary` (`id`, `username`, `password_hash`, `email`, `inscription_date`, `token_session`, `accreditation_id`) VALUES
+(1, 'cc', '$2y$10$Rm0WdvntgU.TPkK5HPrbv.oXo34lpIIsJkQUSGttLhuJVljJPDEs2', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$xnp73Fi9rlm7RKA26mmiiuXcU5XyKeO1c6ZgSMHKap/QVcLAKzEtW', 7),
+(2, 'cc', '$2y$10$xhR4UsjylpjXfwrVHC82lOh4tyevVEnw.BkzplAKqaeOAvZfaGvfK', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$fS356TbPAejZy7Q1XUC5NeyrwBbSrUAaACV0k4iaq0UEZ0bKSXDlu', 7),
+(3, 'JF', '$2y$10$cxRcS3ZLcFexgn/Zn3aYYOsjgwPFuD7a.4PCEgceBcFu1TLq8lA0u', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$qg9sHZApgba9Jcn4sPn1oeSyfxXTiQj.4QWn5c0iy/bi50eOM8d2W', 7),
+(4, 'JF', '$2y$10$Mbf4iLqysFH/bycjQ.N8h.2QMzo6reY9HpbhVkaRFqOpnkbNk6206', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$QXPXkhob/l2Pin5Ka58HduOwSvzb630pzI5EBGhmfs3oz3s50WQyi', 7),
+(5, 'cc', '$2y$10$P4TylnS1Ln0kPMw4HQNRGOTBrPNxN9JCMZap88F1IZNdYHPvPNnnq', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$3sF9qAuFGCWm02.o9ch3pu3PGXoGzLZZIZZ5.6EEgejKnB9RSu5ri', 7),
+(6, 'xx', '$2y$10$j67n9YOc/qotZoudaiOScuJkcqVT5l6EQvCkaxzMkSMhER1d9vTZG', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$BWpOFNThXl8sRAzROvvvaOzjNqz.sp6qiDF/QW3gpnKzpu8bjespy', 7),
+(7, 'cc', '$2y$10$R.2VsVUIScS55C5Iihmyp.N2pbyvEpo3rwG5Ky641hsT61d05/HzG', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$jkp9457tr8mr62IcGz8DW.wpoJjT3RZKmSBunp0yhnfxW8AvV0W.C', 7),
+(8, 'cc', '$2y$10$LIMa8jDK6lmmjBKQjLLCieHcFrxlvJhnn./OiltEbf0kqgcpl2TJ.', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$Eo5mH6Hr6ANET.m6eTVOc.rcgaxszQwx9.7VLADIPmbjJ9lIJBrpO', 7),
+(9, '     ', '$2y$10$M3TKMo8qZa2xFudqLGd6ROowSo61nX3PNLKIlwlw74G1nLAetJQQy', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$hdjzIIC6W22rzHPpID1ce.9LCIBUkk3zLEianMqi.iTKj7IQfwvcG', 7),
+(10, '  cc', '$2y$10$lSL8Xtyc01NuEpsI.TF2ceZVonIJDu8sLb2H7lQvDzKQxuanPnfwq', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$S6DDSm6phIOIf9KX6qhJ/e1iwFiVQeGeL3hj9sdiXTMYJ18inhb6q', 7),
+(11, 'xx', '$2y$10$PxiBs0/t.g7VsaNMsYPUgefdRHFhPS1xlyPXH8WTXdsilby/dJ5Gu', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$MpL6hUWQuiK5lvsijY.hxeSb8BD92pYsVFfAK88rSJOBk83H7QAWm', 7),
+(12, 'vv', '$2y$10$3gu5CYCCXLmp5UfTvbP9zuSpDZUb/OIu7l6opVS1xdOesoRNX/Jdi', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$WPYCmRPPEIkbiJcFXDMYUuWyokP/HhJekcazukgvN8Bm5NORJOlZ.', 7),
+(13, 'cc', '$2y$10$IIHoMa7e1rUBz6Lzc8X16eMV1RiqCnnmqjTCxCxwwfvY1kSpqiSAS', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$pcGpRWZMyrMkATBY3crRne2vSc6jIqZDiQw04W8ZPc5BW9vYJewcm', 7),
+(14, 'cc', '$2y$10$F0XEN0wBV4GuvOStjJrEmO/H4PzX3FvtNOTfXEyyIfuvD4dDrv.tG', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$5VtKB7kGSMUHsxvrZmBZaejwxCmEfRC5s9J3D1S82UydTs53kbeA.', 7),
+(15, 'cc', '$2y$10$y.BYNFRL1X0q0jRpe.Ni0uDkEsv6jqVVCbx7oobD4BDOgQWoyImgC', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$A7SXICu5Uyl5x.ggIWTQauVopWdAZI67pJFbZdynksu16Ff9igaIa', 7),
+(16, 'cc', '$2y$10$LGzUYROIIWp2Z6po1TTPHeeXfXo8riqDJ6d4EN9/.uvVuxKfPk5B2', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$b9hPJ3aHEmPaBOo86lMn0OYbUxLtX/RDLqCWLDHSLCbtO/myd3EFi', 7),
+(17, 'cc', '$2y$10$gPSXP7WVPbxSkJFoTh0Ck.oRza8HzQ788T1ZECbtrY7rEUvYZebyK', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$6akml6HvoK9FXaeSQOd3Dulx5zETrIvy.qBub8YnTJJG9GUNZX1Fu', 7),
+(18, 'Testemail', '$2y$10$Iw1qo1Bd8dmF3qoVSp/BIeyQSMgSSvSxaDx9YwUbc6e7fgkrCL2Bm', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$RASLefBjYSr8BZPUB6WM4OQwgZ6bAenEeQX5jRz/mbTO7Ds3YTPjm', 7),
+(19, 'cc', '$2y$10$Zto8eLaKSoYeOudjnTyLRO.aJQZXDJDi5CjgXt5pyqA67Hb6RSAx.', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$2TqYKwyNCjjaw0fmdKhT.eVMPgp6rBU//VRd3LytECLphEYNbOSq.', 7),
+(20, 'cc', '$2y$10$1a3zET27LJ6MvL3Sp/jRj.vVbeIjfvd.uIMuukpbJn.wNUjUUH3lq', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$XifkvGJbWvtffu.nZEnRVuC4NuD7uk1P4P9Iji.GXx0OI2mw9bRui', 7),
+(21, 'cc', '$2y$10$ppc4gxobRJxYXgHbHz39Aebmd5axrnHbiZzdyfLx.5E53DIv3D4le', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$G1hPbgtG7XUvJG1DmF.JU.O5afPK11hW77sTIcC34EmNZI7Nf6oXy', 7),
+(22, 'cc', '$2y$10$Z37YTVKact5AKorP./UdR.No/IKoXzWyjZmFLS8Fn9msZLTKPYoPW', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$r8zYbmtsSaazju6hvvm2AuAnhAXTvHSrpWplXwhX6TdTJf1utvqR6', 7),
+(23, 'ff', '$2y$10$g3GKd9OUTqymhTtyRhtwReZo8ZihQcIbKFxve75QUC9LdRjr3vCMG', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$UWaWaPTCDh/L1fGfE2YJ6ODTfeQvX3mXuVjy8qiY0zixqSO6C5RKO', 7),
+(24, 'xx', '$2y$10$hZihKFDeL8tVK8tq5/NVu.32bY8OjCkjWtADtZIL64RcnBV4.zySu', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$u5Y1MFiTtrO2/5Z2LkbeT.0IcdoZ84r56y/p/OGAsIbQINSotUvkC', 7),
+(25, 'cc', '$2y$10$owPHc.eE2pO7P3Vj/m9Jouc.xvKwsRW.092Yk3hy/qv7c.2nRv4KW', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$lchtYH8sv5l6GFGQEwz2VeCQRPhTJFNRaJ2DXmlo05BqzgCI0Gmqq', 7),
+(26, 'cc', '$2y$10$2vjfOr.ruRvOihIdWfsiRe5S91/vPZcSn7K793405kCwN8n3v6oo.', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$WBoBVPM8k3lGa2vjjK6ACOssXPr8SNqwVCDSOqseQyNdIiYDoGdnK', 7),
+(27, 'cc', '$2y$10$FxpS5Z1mf08g0xIDaRQs0OLlbXrHs5M45ZcxvBYTXQVnZpjpHUkZ.', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$I6ff9eL02ehY.nKlbooLaOVOJKX45iJecet6zOXDckKLzlYMdlUFm', 7),
+(28, 'cc', '$2y$10$AUzEUTzWxUwN74uniulXKO1dwrBYHPiVXocSuFwdexalbJpGOSLXS', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$YxyLQ4XAVgdi6Ast7xAaeeapX/AwUXVsn3tuclotiNi4PMhJCC5l6', 7),
+(29, 'ss', '$2y$10$wukecNfTCkGULEo36KDa9emU4bemoMI6Uy85no18pCprX2kcKF9fm', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$o24hZNSaSa8EetpQkxiSB.N4yjN2uHHOWuolH3apI9DUw4zpkInEu', 7),
+(30, 'Testemail', '$2y$10$6faeI3/8VknxWDNyLMIzDea0QIn9zjh5dipf2n/N/uA01vY43HB1y', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$2.Q8WuZdAbq7Y0t8gfS6FunKzSY6dxtmznhNLI5GtaFVbKXtlNMyu', 7),
+(31, 'Testemail background', '$2y$10$1jUplxmArlewBflRR9Uw5e3f9QFJD4UyOCwCgTPMVdf03WmZo8FMu', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$Nm0bSGokzNDPxuzt/2iWr.OgHSzq3W7q/F7nRFbR/QJ7tMzZQBZqS', 7),
+(32, 'Testemail background 2', '$2y$10$QitXrmzdbt6EhYXgfApq/OY0Ha5MYcBJaqrRRJxIfXxsLOExYuMXG', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$ZprbV8w9Vltq6oBo9BOODeFpVMD37OnXYGCzLrdeg2f8HQ6oPPKV6', 7),
+(33, 'ddte', '$2y$10$AxVhG2wEIN0KxNuJtcpjJeSo45atw.TQKbfWnQnNFNf0lC7mJMLC.', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$YP8F3u1kY69SWezjH0KjleZ1YWKCztLJYhSOKDX1wucI7Ch7eSxJe', 7),
+(34, 'dd', '$2y$10$tSybOg.KYO/6OBnyUJnhM.PF99exi9K8k12X1Awg9T39anlMnVDZ.', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$vlYDMlbUTHsdIF4ZVBmkB.AOgQfUAYgUcTpFy.ENWWes5vw3BuJfi', 7),
+(35, 'xx', '$2y$10$scHvGiGdP62H9Vqg5CqpL.9na1F/lgsjkVc7o.WOAZHsBrtr60bLe', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$95.OKU9mt/iABS0t890xQ.8frTRR9WR1qKEmc1Z8dAtXyiEP9Q4gy', 7),
+(36, 'JF', '$2y$10$CmRXNrzZpPuzhokqsr0.7uLGWcAcntOF.rNE1gTn29crHUP6hVibi', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$SfqH9vMU6HvEWjstg4Jyo.KT5eYWU81f/AFXpFmJYgmVXoaidNh/i', 7),
+(37, 'xx', '$2y$10$PaEHcxVIoIEPAXlHGZZnlOll47giXeGxYEscM9WsM2BHC6GsLjubi', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$sIhfs9icYEjwZDMGIXA5Uu5D7uNImvfUUc6sC7UXtQ9JhTd/.uO1u', 7),
+(38, 'cc', '$2y$10$SO5IjdaWJEBNqf1NvAXjve.jt78vzEWp7gB6esg2RQtfVrdXAgQM6', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$jcUqrPuyHwoQ4n2JZCNgxebVOLn5LK4SFnf5ftn3.NntbLbR/fAFe', 7),
+(39, 'ff', '$2y$10$o0J0SFJXDRTo5ElKvjmpS.XSDKbWSdY/8Ra./O4TlgTTr8yVEMhbG', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$jr/6vaKmaA8w5Abl57whtOhHPkRrjFn4RGOy6qRZEGBuLNe8zNoku', 7),
+(40, 'cc', '$2y$10$fF2e1/6c4tsGY1k7ngoceueQfAho0k4d.EzRhA0bBVNF/UEbSRT9y', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$AptiH7/Q0aTBKHkw9Y2rUOg0Vt/WAJztpRqRXocnpvaVNdFq7Vqc2', 7),
+(41, 'Testemail background 3', '$2y$10$NWwwSCwxfuCQWHVqv5XHSei5BgJcckHIWuIHUQqsGYlZ7wARfPms6', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$suPovgYbKOmIl..QI1yFo.Y6ok.OIXwskBznqRf.hctXr7U0oQIJK', 7),
+(42, 'Testemail background 4', '$2y$10$vTi0PLIHbv3HHSTHlTAHNOk8beKHevzhzZ2tX6DdIDkizl6sA0Wm6', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$FMjw/alfBvJRJV2LiWrwI.vdid7GzR/fUZOzwt6dqfF.E4AH9zIr.', 7),
+(43, 'Testemail background 5', '$2y$10$iy/igAPPtbjoGFuV1ySsjed.tM03zpYaYlJa857hIEE5XhVPuKOB2', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$pAvpwD14AwAik6Z/dIwYnO8yIAxCViz.ioIz.SpiX4wDIqPBw.Hpi', 7),
+(44, 'Testemail background 6', '$2y$10$J/Ih6FNKzmhtFsORfhmqG.pTdYyiKUPQpyFtddci6owjstfmYIY4q', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$xwxmB.VFOkeeEi.AIDYK5OTQldR5dbhOzVH4oa1K20IUe9puOkYK.', 7),
+(45, 'Testemail background 7', '$2y$10$sy/6l06UGZP2uN9FTGeXOewfPqUPVj983pEr8OWvInTdkN6T.AwXy', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$Z5LQ.Y5ZuMZD/L8eVXD8I.w0ccLxqXFghDVXvI826zexrbwBxAb5W', 7),
+(46, 'Testemail background 8', '$2y$10$cEDq6QEndu9H0Sd2dosCs.oG0d6bLJ0ocLjvK/V6ahJYNQLhN6XdG', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$3LEvOnydzjHurFU.CDGTS.LKZkTqXXI/WE6Htaez7Q3TPyYZCJm0y', 7),
+(47, 'Testemail background 9', '$2y$10$.cZ2aTFJDpmFqHLfCbMRPe.hgQfZnxiq3tVMWxoZ5jRvmgixV3tCW', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$6UzZqi20ftm1sa2tyPXoiOcN4o8mv2opx7R25RZOf0HA2JSmaPjfm', 7),
+(48, 'Testemail background 10', '$2y$10$gcLx1uQm727gp0g2WhOwwevPooZhThpsxCGp1NyS9W79mQW1XDxOa', 'serve.emmanuel@gmail.com', '2018-06-19', '$2y$10$rIXEBAyXkdjKDI.Hzjfk9eR/wA/ZAv3DZcz3V34lUT/JCA42o3NGy', 7);
 
 --
 -- Index pour les tables déchargées
@@ -283,6 +362,12 @@ ALTER TABLE `t_users`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Index pour la table `t_users_temporary`
+--
+ALTER TABLE `t_users_temporary`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT pour les tables déchargées
 --
 
@@ -302,7 +387,7 @@ ALTER TABLE `t_accreditation_permissions`
 -- AUTO_INCREMENT pour la table `t_comment`
 --
 ALTER TABLE `t_comment`
-  MODIFY `COM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `COM_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- AUTO_INCREMENT pour la table `t_permissions`
@@ -320,7 +405,13 @@ ALTER TABLE `t_post`
 -- AUTO_INCREMENT pour la table `t_users`
 --
 ALTER TABLE `t_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pour la table `t_users_temporary`
+--
+ALTER TABLE `t_users_temporary`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=50;
 
 --
 -- Contraintes pour les tables déchargées
