@@ -16,7 +16,7 @@ class ControllerHome {
         $this->commentManager = new CommentManager();
     }
 
-    // Show the list of all the posts of the blog
+    // Show the homepage (with the list of all the posts of the blog)
     public function home() {
         $posts = $this->postManager->getPosts();
         $view = new View("Home");
@@ -36,6 +36,18 @@ class ControllerHome {
         $post = $this->postManager->getPost($idPost);
         $view = new View("EditPost");
         $view->generate(array('post' => $post));
+    }
+        
+    // Show the signin page
+    public function signInPage() {
+        $view = new View('inscription');
+        $view->generate();
+    }
+    
+    // Show the signin page
+    public function logInPage() {
+        $view = new View('login');
+        $view->generate();
     }
     
 }

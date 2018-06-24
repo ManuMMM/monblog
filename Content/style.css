@@ -8,18 +8,25 @@ and open the template in the editor.
     Author     : Manu
 */
 
-html, body {
+html {
     height: 100%;
 }
 
 body {
+    min-height: 100%;
     color: #bfbfbf;
-    background: black;
+    background-image: url('images/background-alaska.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: 'Futura-Medium', 'Futura', 'Trebuchet MS', sans-serif;
 }
 
 h1, h2 {
-    color: white;
+    color: whitesmoke;
+}
+
+#logo{
+    width: 50px;
 }
 
 .titlePost {
@@ -28,13 +35,16 @@ h1, h2 {
 
 #global {
     min-height: 100%;
-    background: #333534;
+    background: rgba(51, 53, 52, 0.7);
     width: 70%;
     margin: auto;
     text-align: justify;
-    padding: 5px 20px;
 }
 
+#globalMargin {
+    padding: 5px 20px;
+}
+    
 #content {
     margin-bottom : 30px;
 }
@@ -64,7 +74,28 @@ time {
     height: 100vh;
 }
 
-/* TinyMCE part */
+/* -------------------------------------------------------------------------- */
+/* --------------------------- Error Form border ---------------------------- */
+/* -------------------------------------------------------------------------- */
+
+.errorFocus{
+    border-color: red;
+    box-shadow: 0 0 0 0.2rem rgba(255,0,0,.45);
+}
+
+/* -------------------------------------------------------------------------- */
+/* ------------------ Fix for the nav when modal is open ---------------------*/
+/* -------------(bootstrap add a padding-right & margin-right)----------------*/
+/* -------------------------------------------------------------------------- */
+
+nav#navigationMenu{
+    padding-right: 1em!important;
+    margin-right: 0px!important;
+}
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------------ TinyMCE part ------------------------------ */
+/* -------------------------------------------------------------------------- */
 
 pre {
     background-color: #272822;
@@ -72,29 +103,337 @@ pre {
     padding: 1em;
 }
 
-/*
-figure.image {
-    display: inline-block;
-    border: 1px solid gray;
-    margin: 0 2px 0 1px;
-    background: #f5f2f0;
+/* -------------------------------------------------------------------------- */
+/* ------------------------------ Modal login ------------------------------- */
+/* -------------------------------------------------------------------------- */
+
+.modal-login {
+        color: #636363;
+        width: auto;
+        justify-content: center;
+}
+.modal-login .modal-content {
+        padding: 20px;
+        border-radius: 5px;
+        border: none;
+}
+.modal-login .modal-header {
+        border-bottom: none;
+        position: relative;
+        justify-content: center;
+}
+.modal-login h4 {
+        text-align: center;
+        font-size: 26px;
+}
+.modal-login  .form-group {
+        position: relative;
+}
+.modal-login i {
+        position: absolute;
+        left: 13px;
+        top: 11px;
+        font-size: 18px;
+}
+.modal-login .form-control {
+        padding-left: 40px;
+}
+.modal-login .form-control:focus {
+        border-color: #00ce81;
+}
+.modal-login .form-control, .modal-login .btn {
+        min-height: 40px;
+        border-radius: 3px; 
+}
+.modal-login .hint-text {
+        text-align: center;
+        padding-top: 10px;
+}
+.modal-login .close {
+position: absolute;
+        top: -5px;
+        right: -5px;
+}
+.modal-login .btn {
+        line-height: normal;
+}
+.modal-login .modal-footer {
+        background: #ecf0f1;
+        border-color: #dee4e7;
+        text-align: center;
+        margin: 0 -20px -20px;
+        border-radius: 5px;
+        font-size: 13px;
+}
+.modal-login .modal-footer a {
+        color: #999;
 }
 
-figure.align-left {
-    float: left;
+.modal-footer {
+    justify-content: space-around;
 }
 
-figure.align-right {
-    float: right;
+.modal-footer p {
+    margin-bottom: 0px;
 }
 
-figure.image img {
-    margin: 8px 8px 0 8px;
+#messageSuccess{
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-figure.image figcaption {
-    margin: 6px 8px 6px 8px;
+#messageFail{
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+/* -------------------------------------------------------------------------- */
+/* -------------------------- Loader Spinner -------------------------------- */
+/* -------------------------------------------------------------------------- */
+
+.loaderOverlay{
+    display: none;
+    background-color: rgb(0,0,0,0.7);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1100;
+    overflow: hidden;
+    outline: 0;
+}
+
+.cssloader {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+            -o-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;
+    perspective: 780px;
+}
+
+.cssload-inner {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+            -o-box-sizing: border-box;
+            -ms-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+    border-radius: 50%;
+            -o-border-radius: 50%;
+            -ms-border-radius: 50%;
+            -webkit-border-radius: 50%;
+            -moz-border-radius: 50%;	
+}
+
+.cssload-inner.cssload-one {
+    left: 0%;
+    top: 0%;
+    animation: cssload-rotate-one 1.15s linear infinite;
+            -o-animation: cssload-rotate-one 1.15s linear infinite;
+            -ms-animation: cssload-rotate-one 1.15s linear infinite;
+            -webkit-animation: cssload-rotate-one 1.15s linear infinite;
+            -moz-animation: cssload-rotate-one 1.15s linear infinite;
+    border-bottom: 5px solid rgb(12,28,140);
+}
+
+.cssload-inner.cssload-two {
+    right: 0%;
+    top: 0%;
+    animation: cssload-rotate-two 1.15s linear infinite;
+            -o-animation: cssload-rotate-two 1.15s linear infinite;
+            -ms-animation: cssload-rotate-two 1.15s linear infinite;
+            -webkit-animation: cssload-rotate-two 1.15s linear infinite;
+            -moz-animation: cssload-rotate-two 1.15s linear infinite;
+    border-right: 5px solid rgb(255,255,255);
+}
+
+.cssload-inner.cssload-three {
+    right: 0%;
+    bottom: 0%;
+    animation: cssload-rotate-three 1.15s linear infinite;
+            -o-animation: cssload-rotate-three 1.15s linear infinite;
+            -ms-animation: cssload-rotate-three 1.15s linear infinite;
+            -webkit-animation: cssload-rotate-three 1.15s linear infinite;
+            -moz-animation: cssload-rotate-three 1.15s linear infinite;
+    border-top: 5px solid rgb(239,43,45);
+}
+
+@keyframes cssload-rotate-one {
+    0% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@-o-keyframes cssload-rotate-one {
+    0% {
+        -o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        -o-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@-ms-keyframes cssload-rotate-one {
+    0% {
+        -ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        -ms-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@-webkit-keyframes cssload-rotate-one {
+    0% {
+        -webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        -webkit-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@-moz-keyframes cssload-rotate-one {
+    0% {
+        -moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(0deg);
+    }
+    100% {
+        -moz-transform: rotateX(35deg) rotateY(-45deg) rotateZ(360deg);
+    }
+}
+
+@keyframes cssload-rotate-two {
+    0% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@-o-keyframes cssload-rotate-two {
+    0% {
+        -o-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        -o-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@-ms-keyframes cssload-rotate-two {
+    0% {
+        -ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        -ms-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@-webkit-keyframes cssload-rotate-two {
+    0% {
+        -webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        -webkit-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@-moz-keyframes cssload-rotate-two {
+    0% {
+        -moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(0deg);
+    }
+    100% {
+        -moz-transform: rotateX(50deg) rotateY(10deg) rotateZ(360deg);
+    }
+}
+
+@keyframes cssload-rotate-three {
+    0% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+@-o-keyframes cssload-rotate-three {
+    0% {
+        -o-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        -o-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+@-ms-keyframes cssload-rotate-three {
+    0% {
+        -ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        -ms-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+@-webkit-keyframes cssload-rotate-three {
+    0% {
+        -webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        -webkit-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+@-moz-keyframes cssload-rotate-three {
+    0% {
+        -moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(0deg);
+    }
+    100% {
+        -moz-transform: rotateX(35deg) rotateY(55deg) rotateZ(360deg);
+    }
+}
+
+/* -------------------------------------------------------------------------- */
+/* ------------------------------ Noscript ---------------------------------- */
+/* -------------------------------------------------------------------------- */
+
+noscript{
+    position: fixed;
+    background-color: rgba(0,0,0,0.9);
+    color: whitesmoke;
+    top: 0px;
+    left: 0px;
+    bottom: 0px;
+    right: 0px;
+    z-index: 99999;
+}
+
+noscript p{
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
     text-align: center;
 }
 
-*/
+.noscroll{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
