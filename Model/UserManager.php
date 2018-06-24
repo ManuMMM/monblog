@@ -24,16 +24,22 @@ class UserManager extends Model {
                     return TRUE;
                 }
                 else {
-                    $error = "Cet identifiant est déjà utilisé";
-                    return $error;
+                    $error = [];
+                    $error['type'] = "username";
+                    $error['message'] = "Cet identifiant est déjà utilisé";
+                    return $error ;
                 }
             }
             else {
-                $error = "Vos mots de passe ne sont pas identique.";
+                $error = [];
+                $error['type'] = 'password';
+                $error['message'] = "Vos mots de passe ne sont pas identique.";
                 return $error;
             }
         } else {
-            $error = "Votre adresse e-mail n'est pas valide.";
+            $error = [];
+            $error['type'] = "email";
+            $error['message'] = "Votre adresse e-mail n'est pas valide.";
             return $error;
         }
     }
@@ -69,12 +75,16 @@ class UserManager extends Model {
                 }
                 return TRUE;
             } else {
-                $error = "Mot de passe incorrect";
-                return $error;
+                $error = [];
+                $error['type'] = "password";
+                $error['message'] = "Mot de passe incorrect";
+                return $error ;
             }
         }
         else {
-            $error = "Identifiant introuvable";
+            $error = [];
+            $error['type'] = "username";
+            $error['message'] = "Identifiant introuvable";
             return $error;
         }
     }
@@ -209,7 +219,7 @@ class UserManager extends Model {
             $data = $req->fetch();  // Access to the first result line
             return new User($data);
         }else{
-            throw new Exception("Pas d'identifiant correspondant à '$username'");
+            return NULL;
         }
     }
             

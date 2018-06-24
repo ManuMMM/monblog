@@ -22,8 +22,15 @@ class ControllerRegister {
             $data['state'] = 'success';
             $data['return'] = '<strong>Vous êtes maintenant inscrit, un email qui vient de vous être envoyé pour activer votre compte.</strong>';
         }else{
-            $data['state'] = 'fail';
-            $data['return'] = $registration;
+            if($registration['type'] === 'username'){
+                $data['errorUsername'] = '<p class="error" style="color:red; text-align:center; padding:10px; margin-bottom: -1rem;">' . $registration['message'] . '</p>';
+            }
+            if ($registration['type'] === 'password') {
+                $data['errorPassword'] = '<p class="error" style="color:red; text-align:center; padding:10px; margin-bottom: -1rem;">' . $registration['message'] . '</p>';
+            }
+            if ($registration['type'] === 'email') {
+                $data['errorEmail'] = '<p class="error" style="color:red; text-align:center; padding:10px; margin-bottom: -1rem;">' . $registration['message'] . '</p>';
+            }
         }
         echo json_encode($data);
     }
@@ -36,8 +43,12 @@ class ControllerRegister {
             $data['state'] = 'success';
             $data['return'] = '<strong>Vous êtes maintenant connecté ! Bienvenue ' . $username . ' !</strong>';
         }else{
-            $data['state'] = 'fail';
-            $data['return'] = $logged;
+            if($logged['type'] === 'username'){
+                $data['errorUsername'] = '<p class="error" style="color:red; text-align:center; padding:10px; margin-bottom: -1rem;">' . $logged['message'] . '</p>';
+            }
+            if ($logged['type'] === 'password') {
+                $data['errorPassword'] = '<p class="error" style="color:red; text-align:center; padding:10px; margin-bottom: -1rem;">' . $logged['message'] . '</p>';
+            }
         }
         echo json_encode($data);
     }
@@ -51,13 +62,13 @@ class ControllerRegister {
         $data = [];
         $registered = $this->userManager->emailActivation($username, $token_session);
         if($registered === TRUE){
-            $data['state'] = 'success';
-            $data['return'] = '<strong>Votre compte est maintenant actif, vous pouvez vous connecter dès à présent !</strong>';
+            $_SESSION['state'] = 'success';
+            $_SESSION['return'] = '<strong>Votre compte est maintenant actif, vous pouvez vous connecter dès à présent !</strong>';
         }else{
-            $data['state'] = 'fail';
-            $data['return'] = $registered;
+            $_SESSION['state'] = 'fail';
+            $_SESSION['return'] = $registered;
         }
-        echo json_encode($data);
+        header('location:index.php');
     }
     
 }

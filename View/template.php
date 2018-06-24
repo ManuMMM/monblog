@@ -11,87 +11,48 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
         <link rel="stylesheet" href="Content/style.css" />
         <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
+        <script src="Content/js/tinymceSetup.js"></script>
+        <script src="Content/js/login.js"></script>
+        <script src="Content/js/signin.js"></script>
+        <?php
+        if(isset($_SESSION['state']) && isset($_SESSION['return'])){
+            if($_SESSION['state'] == 'success'){
+                ?>
+                <script>
+                    $(document).ready(function(){
+                        $("#messageSuccess").html('<?php echo $_SESSION['return']; ?>').fadeIn().delay(5000).fadeOut();
+                    });
+                </script>
+                <?php
+            } elseif($_SESSION['state'] == 'fail') {
+                ?>
+                <script>
+                    $(document).ready(function(){
+                        $("#messageFail").html('<?php echo $_SESSION['return']; ?>').fadeIn().delay(5000).fadeOut();
+                    });
+                </script>
+                <?php
+            } else {
+                unset($_SESSION['state']);
+                unset($_SESSION['return']);
+            }
+            unset($_SESSION['state']);
+            unset($_SESSION['return']);
+        }
+        ?>
         <script>
-            tinymce.init({
-                selector: '#txtPost',
-                setup: function (editor) { editor.on('change', function () { editor.save(); }); },
-                plugins: "wordcount",
-                branding: false
-            }); 
-        </script>
-        <script>
-            // AJAX for signin & login
+            // Remove the class noscroll if the javascript is allowed
             $(document).ready(function(){
-                $("#loginForm").on("submit", function(event){
-                    event.preventDefault();
-                    username = $(this).find("input[name=username]").val();
-                    password = $(this).find("input[name=password]").val();
-                    usernameInput = $(this).find("input[name=username]");
-                    passwordInput = $(this).find("input[name=password]");
-                    url = $(this).attr("action");
-                    if(username.trim() != '' && password.trim() != ''){
-                        $.post(url,{username:username,password:password}, function(data){
-                            if(data.state == "success"){
-                                $("#closeLogin").click();
-                                $("#loginState").html('<li class="nav-item"><div class="btn btn btn-outline-primary mr-2"><i class="fa fa-user"></i> ' + username + '</div></li>');
-                                $("#loginState").append('<a class="btn btn-outline-primary mr-2" href="index.php?action=logout">Se déconnecter</a>');
-                                $("#footerBlog").append('<a href="index.php?action=admin">Admin</a>');
-                                $("#messageSuccess").html(data.return).fadeIn().delay(5000).fadeOut();
-                            }else{
-                                alert("Echec" + data.return);
-                            }
-                        }, "json");
-                    }else{
-                        if(username.trim() == ''){
-                            usernameInput.after("Veuillez renseigner l'identifiant");
-                        }else{
-                            passwordInput.after("Veuillez renseigner le mot de passe");
-                        }
-                    }
-                });
-                $("#signinForm").on("submit", function(event){
-                    event.preventDefault();
-                    username = $(this).find("input[name=username]").val();
-                    password = $(this).find("input[name=password]").val();
-                    passwordConfirmation = $(this).find("input[name=passwordConfirmation]").val();
-                    email = $(this).find("input[name=email]").val();
-                    usernameInput = $(this).find("input[name=username]");
-                    passwordInput = $(this).find("input[name=password]");
-                    passwordConfirmationInput = $(this).find("input[name=passwordConfirmation]");
-                    emailInput = $(this).find("input[name=email]");
-                    url = $(this).attr("action");
-                    if(username.trim() != '' && password.trim() != '' && passwordConfirmation.trim() != '' && email.trim() != ''){
-                        $.post(url,{username:username,password:password,passwordConfirmation:passwordConfirmation,email:email}, function(data){
-                            if(data.state == "success"){
-                                $("#closeSignin").click();
-                                $("#messageSuccess").html(data.return).fadeIn().delay(5000).fadeOut();
-                            }else{
-                                alert("Echec" + data.return);
-                            }
-                        }, "json");
-                    }else{
-                        if(username.trim() == ''){
-                            usernameInput.after("Veuillez renseigner votre identifiant");
-                        }else if(password.trim() == ''){
-                            passwordInput.after("Veuillez renseigner votre mot de passe");
-                        }else if(passwordConfirmation.trim() == ''){
-                            passwordConfirmationInput.after("Veuillez renseigner votre mot de passe");
-                        }else{
-                            emailInput.after("Veuillez renseigner votre email");
-                        }
-                    }
-                });
+                $("body").removeClass("noscroll");
             });
         </script>
-        <title><?= $title ?></title>   <!-- Specific element -->
+        <!-- Specific element -->
+        <title><?= $title ?></title>
     </head>
-    <body>
+    <body class="noscroll">
         <!-- #global -->
         <div id="global">
-            <header>
-                <a href="index.php"><h1 id="titleBlog">Jean Forteroche</h1></a><?php if(isset($_SESSION['session']['username'])){ echo $_SESSION['session']['username'].' '; ?> <a href="index.php?action=logout">Se déconnecter</a> <?php } else {?> <a href="index.php?action=loginpage">Se connecter</a> <?php } ?>
-                <p>Bienvenue sur mon modeste blog.</p>
-            </header>
+            <header></header>
             <!-- Navigation bar -->
             <nav id="navigationMenu" class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top" role="navigation">
                 <a class="navbar-brand" href="index.php"><img src="Content/images/writepen.jpg" id="logo" alt="Billet simple pour l'Alaska"></a>
@@ -188,8 +149,26 @@
                             </div>
                         </div>
                     </div><!-- End Modal Sign In -->
-                    <!-- Message success (Sign in / Log in) -->
+                    <!-- Message success (Sign in / Log in / Activation) -->
                     <div id="messageSuccess" class="alert alert-success" style="display: none;"></div>
+                    <!-- Message fail (Sign in / Log in / Activation) -->
+                    <div id="messageFail" class="alert alert-danger" style="display: none;"></div>
+                    <!-- Loader spinner -->
+                    <div class="loaderOverlay">
+                        <div class="cssloader">
+                            <div class="cssload-inner cssload-one"></div>
+                            <div class="cssload-inner cssload-two"></div>
+                            <div class="cssload-inner cssload-three"></div>
+                        </div>
+                    </div>
+                    <!-- Information javascript -->
+                    <noscript>
+                        <p>
+                            Le javascript est désactivé !<br>
+                            Cependant, le site a besoin de javascript pour fonctionner de manière optimum<br>
+                            Veuillez autoriser le javascript pour le site puis actualiser la page. Merci.
+                        </p>
+                    </noscript>
                     <!-- Specific element -->
                     <?= $content ?>
                 </div>
