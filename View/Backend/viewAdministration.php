@@ -1,45 +1,7 @@
+<script src="Content/js/postForm.js"></script>
+<script src="Content/js/deleteArticleForm.js"></script>
+
 <?php $this->title = "Jean Forteroche - Panneau d'aministration" ?>
-<form method="post" action="#writePost">
-    <button>Ecrire un article</button>
-</form>
-<form method="post" action="#modifyPost">
-    <button>Editer un article</button>
-</form>
-<form method="post" action="#moderateComments">
-    <button>Modérer les commentaires</button>
-</form>
-<section class="adminSections" id="writePost">
-    <header>
-        <h1 id="admin_write_article">Rédaction d'article</h1>
-    </header>
-    <form method="post" action="index.php?action=addpost">
-    <input id="title" name="title" type="text" placeholder="Titre" required /><br />
-    <textarea id="txtPost" name="content" rows="4" placeholder="Article" required></textarea><br />
-    <input type="hidden" name="id" value="" />
-    <button type="reset">Effacer</button>
-    <input type="submit" value="Publier" />
-    </form>
-</section>
-<section class="adminSections" id="modifyPost">
-    <h2>Modifier un article</h2>
-    <?php foreach ($posts as $post): ?>
-    <section>
-        <a href="<?= "index.php?action=getPost&id=" . $post->getIdPost(); ?>">
-            <h2 class="titlePost"><?= $post->getTitle(); ?></h2>
-        </a>
-        <time><?= $post->getDate(); ?></time>
-        <form method="post" action="index.php?action=editor">
-            <input type="hidden" name="id" value="<?= $post->getIdPost(); ?>" />
-            <input type="submit" value="Editer" />
-        </form>
-        <form method="post" action="index.php?action=deletepost">
-            <input type="hidden" name="id" value="<?= $post->getIdPost(); ?>" />
-            <input type="submit" value="Supprimer" />
-        </form>
-    </section>
-    <hr />
-    <?php endforeach; ?>
-</section>
 <section class="adminSections" id="moderateComments">
     <h2>Modérer les commentaires</h2>
     <?php foreach ($comments as $comment): ?>
@@ -51,3 +13,97 @@
         </form>
     <?php endforeach; ?>
 </section>
+<!-- Administration in Ajax -->
+<section class="adminSections" id="adminPanel">
+    <div id="newArticle">
+        <h2>Gestionnaire d'articles</h2>
+        <a href="#modalPost" class="btn tooltip-add" data-toggle="modal" data-idpost="" data-titlepost="" data-contentpost=""><i class="fas fa-plus-circle"></i> Ecrire un nouvel article</a>
+    </div>    
+    <table class="articles table-stripped">
+        <thead>
+            <th>Titre</th>
+            <th>Article</th>
+            <th>Date</th>
+            <th>Action</th>
+        </thead>
+        <tbody id="listPosts">
+            <?php foreach ($posts as $post): ?>
+            <tr id="<?php echo 'line' . $post->getIdPost(); ?>">
+                <td>
+                    <a href="<?= "index.php?action=getPost&id=" . $post->getIdPost(); ?>">
+                        <h2 class="titlePost"><?= $post->getTitle(); ?></h2>
+                    </a>
+                </td>
+                <td>
+                    <p><?= $post->getExcerpt(); ?></p>
+                </td>
+                <td>
+                    <time><?= $post->getDate(); ?></time>
+                </td>
+                <td>
+                    <button type="button" class="btn-simple" data-toggle="modal" data-target="#modalPost" data-idpost="<?= $post->getIdPost(); ?>" data-titlepost="<?= urlencode($post->getTitle()); ?>" data-contentpost="<?= urlencode($post->getContent()); ?>"><i class="fas fa-edit tooltip-edit"></i></button>
+                    <form id="<?php echo 'deleteArticleForm' . $post->getIdPost(); ?>" class="deleteArticleForm" action="index.php?action=deletepost" method="post">
+                        <input type="hidden" name="id" value="<?php echo $post->getIdPost(); ?>" />
+                        <button type="submit" class="btn-simple"><i class="fas fa-trash-alt tooltip-delete"></i></button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <!-- Modal new post -->
+    <div id="modalPost" class="modal fade">        
+        <div class="modal-dialog modal-post">
+            <div class="modal-content">
+                <div class="modal-header">				
+                    <h4 class="modal-title">Nouvel Article</h4>
+                    <button id="closePost" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="postForm" action="index.php?action=addpost" method="post">
+                        <div class="form-group form-title">
+                            <i class="fas fa-pencil-alt"></i>
+                            <input type="text" class="form-control modal-title" id="title" name="title" placeholder="Titre" required="required">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="txtPost" name="content" rows="4" placeholder="Article"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input id="postFormId" type="hidden" name="id" value="" />
+                            <input type="submit" id="btn-submitPost" class="btn btn-primary btn-block btn-lg" value="Publier">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- End modal new post -->
+</section>
+
+<!-- Update the data to edit in the modal -->
+<script>
+    function urldecode(url) {
+        return decodeURIComponent(url.replace(/\+/g, ' '));
+    }
+    
+    // Event on the opening of the modal, set content in textarea if needed (if we edit a post)
+    $('#modalPost').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget); // Button that triggered the modal
+        // Extract info from data-* attributes
+        var title = urldecode(button.data('titlepost'));
+        var content = urldecode(button.data('contentpost'));
+        var id = button.data('idpost');
+        var modal = $(this);
+        if(content.length > 1){
+            modal.find('h4.modal-title').text('Modification de "' + title + '"');
+            $( "#postForm" ).attr( "action", "index.php?action=updatepost" );
+            $("#postFormId").attr("value", id);
+            $("#btn-submitPost").val("Modifier")
+        }else{
+            modal.find('h4.modal-title').text('Nouvel Article');
+            $( "#postForm" ).attr( "action", "index.php?action=addpost" );
+            $("#btn-submitPost").val("Publier")
+        }
+        modal.find('#title').val(title);
+        tinyMCE.activeEditor.setContent(content);      
+    });
+</script>

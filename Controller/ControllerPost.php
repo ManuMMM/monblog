@@ -17,31 +17,73 @@ class ControllerPost {
     }
 
     // Add a new post
-    public function createPost($data) {
+    public function createPost($dataPost) {
         // Create a new object Post with the data sent
-        $post = new Post($data);
-        // Add it into the database
-        $this->postManager->addPost($post);
-        // Refresh the Admin panel view
-        header('location:index.php?action=admin');
+        $post = new Post($dataPost);
+        // Add it into the database & return a message to confirm        
+        $data = [];
+        $savePost = $this->postManager->addPost($post);
+        if($savePost === TRUE){
+            $data['state'] = 'add';
+            $data['return'] = '<strong>Votre article vient d\'être publié !</strong>';
+            $idPost = $post->getIdPost();
+            $date = $post->getDate();
+            $title = $post->getTitle();
+            $excerpt = $post->getExcerpt();
+            $datatitlepost = urlencode($post->getTitle());
+            $datacontentpost = urlencode($post->getContent());
+            $line ='line' . $post->getIdPost();
+            $data['datanewline'] = '<tr id="' . $line .'"><td><a href="index.php?action=getPost&id=' . $idPost . '"><h2 class="titlePost">' . $title . '</h2></a></td><td><p>' . $excerpt . '</p></td><td><time>' . $date . '</time></td><td><button style="padding-right: 10px;" type="button" class="btn-simple" data-toggle="modal" data-target="#modalPost" data-idpost="' . $idPost . '" data-titlepost="' . $datatitlepost . '" data-contentpost="' . $datacontentpost . '"><i class="fas fa-edit tooltip-edit"></i></button><form id="deleteArticleForm' . $idPost . '" class="deleteArticleForm" action="index.php?action=deletepost" method="post"><input type="hidden" name="id" value="' . $idPost . '" /><button type="submit" class="btn-simple"><i class="fas fa-trash-alt tooltip-delete" data-original-title="" title=""></i></button></form></td></tr>';
+        }else{
+            $data['state'] = 'fail';
+            $data['return'] = 'Une erreur est survenue, la publication de l\'article à échouée, veuillez réessayer ultérieurement !';
+        }
+        echo json_encode($data);
     }
     
     // Update a post
-    public function updatePost($data) {
+    public function updatePost($dataPost) {
         // Create a new object Post with the data sent
-        $post = new Post($data);
+        $partialpost = new Post($dataPost);
+        // Add it into the database & return a message to confirm        
+        $data = [];
         // Update the one in the database with the one just created
-        $this->postManager->updatePost($post);
-        // Refreshing the post display
-        $this->getPost($post->getIdPost());
+        $editedPost = $this->postManager->updatePost($partialpost);
+        $idPost = $partialpost->getIdPost();
+        $post = $this->postManager->getPost($idPost);
+        if($editedPost === TRUE){
+            $data['state'] = 'edit';
+            $data['linetoedit'] = 'line' . $post->getIdPost();
+            $data['return'] = '<strong>Votre article vient d\'être modifié !</strong>';
+            $idPost = $post->getIdPost();
+            $date = $post->getDate();
+            $title = $post->getTitle();
+            $excerpt = $post->getExcerpt();
+            $datatitlepost = urlencode($post->getTitle());
+            $datacontentpost = urlencode($post->getContent());
+            $line ='line' . $post->getIdPost();
+            $data['datanewline'] = '<tr id="' . $line .'"><td><a href="index.php?action=getPost&id=' . $idPost . '"><h2 class="titlePost">' . $title . '</h2></a></td><td><p>' . $excerpt . '</p></td><td><time>' . $date . '</time></td><td><button style="padding-right: 10px;" type="button" class="btn-simple" data-toggle="modal" data-target="#modalPost" data-idpost="' . $idPost . '" data-titlepost="' . $datatitlepost . '" data-contentpost="' . $datacontentpost . '"><i class="fas fa-edit tooltip-edit"></i></button><form id="deleteArticleForm' . $idPost . '" class="deleteArticleForm" action="index.php?action=deletepost" method="post"><input type="hidden" name="id" value="' . $idPost . '" /><button type="submit" class="btn-simple"><i class="fas fa-trash-alt tooltip-delete" data-original-title="" title=""></i></button></form></td></tr>';
+        }else{
+            $data['state'] = 'fail';
+            $data['return'] = 'Une erreur est survenue, la publication de l\'article à échouée, veuillez réessayer ultérieurement !';
+        }
+        echo json_encode($data);
     }
     
     // Delete a post
     public function deletePost($idPost) {
+        $data = [];
         // Delete the object Post in the database
-        $this->postManager->deletePost($idPost);
-        // Refresh the Admin panel view
-        header('location:index.php?action=admin#modifyPost');
+        $deletePost = $this->postManager->deletePost($idPost);
+        if($deletePost === TRUE){
+            $data['state'] = 'delete';
+            $data['linetoedit'] = 'line' . $idPost;
+            $data['return'] = '<strong>L\'article vient d\'être supprimé !</strong>';
+        }else{
+            $data['state'] = 'fail';
+            $data['return'] = 'Une erreur est survenue, la suppression de l\'article à échouée, veuillez réessayer ultérieurement !';
+        }
+        echo json_encode($data);
     }
     
     // Show the details of a post

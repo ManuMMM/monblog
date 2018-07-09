@@ -9,9 +9,11 @@
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" />
+        <link href="https://fonts.googleapis.com/css?family=Amatic+SC|Pacifico" rel="stylesheet">
         <link rel="stylesheet" href="Content/style.css" />
         <script src='https://cloud.tinymce.com/stable/tinymce.min.js'></script>
         <script src="Content/js/tinymceSetup.js"></script>
+        <script src="Content/js/tooltipSetup.js"></script>
         <script src="Content/js/login.js"></script>
         <script src="Content/js/signin.js"></script>
         <?php
@@ -89,11 +91,11 @@
                                     <form id="loginForm" action="index.php?action=login" method="post">
                                         <div class="form-group">
                                             <i class="fa fa-user"></i>
-                                            <input type="text" class="form-control" name="username" placeholder="Identifiant" required="required">
+                                            <input type="text" class="form-control" name="username" placeholder="Identifiant" autocomplete="on" required="required">
                                         </div>
                                         <div class="form-group">
                                             <i class="fa fa-lock"></i>
-                                            <input type="password" class="form-control" name="password" placeholder="Mot de passe" required="required">					
+                                            <input type="password" class="form-control" name="password" placeholder="Mot de passe" autocomplete="off" required="required">					
                                         </div>
                                         <div class="form-group">
                                             <label for="rememberMe"><input type="checkbox" name="rememberMe" id="rememberMe"> Se souvenir de moi</label><br>
@@ -123,19 +125,19 @@
                                     <form id="signinForm" action="index.php?action=signin" method="post">
                                         <div class="form-group">
                                             <i class="fa fa-user"></i>
-                                            <input type="text" class="form-control" name="username" placeholder="Identifiant" required="required">
+                                            <input type="text" class="form-control" name="username" placeholder="Identifiant" autocomplete="on" required="required">
                                         </div>
                                         <div class="form-group">
                                             <i class="fa fa-lock"></i>
-                                            <input type="password" class="form-control" name="password" placeholder="Mot de passe" required="required">					
+                                            <input type="password" class="form-control" name="password" placeholder="Mot de passe" autocomplete="off" required="required">					
                                         </div>
                                         <div class="form-group">
                                             <i class="fa fa-lock"></i>
-                                            <input type="password" class="form-control" name="passwordConfirmation" placeholder="Confirmer mot de passe" required="required">					
+                                            <input type="password" class="form-control" name="passwordConfirmation" placeholder="Confirmer mot de passe" autocomplete="off" required="required">					
                                         </div>
                                         <div class="form-group">
                                             <i class="fas fa-at" aria-hidden="true"></i>
-                                            <input type="text" class="form-control" name="email" placeholder="Email" required="required">					
+                                            <input type="text" class="form-control" name="email" placeholder="Email" autocomplete="email" required="required">					
                                         </div>
                                         <div class="form-group">
                                             <input type="submit" class="btn btn-primary btn-block btn-lg" value="S'inscrire">

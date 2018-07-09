@@ -40,6 +40,18 @@ class Post {
     
     // Functions reflecting the functionnalities of the post //
     
+    // Return an excerpt of an article with the length asked
+    public function getExcerpt($length = 30) {
+        $content = $this->getContent();
+        $article = strip_tags($content);
+        if(strlen($article) < $length){
+            return $article;
+        } else {
+            $excerpt = mb_substr($article, 0, $length, 'UTF-8') . '...';
+            return $excerpt;
+        }
+    }
+    
     // GETTERS //
     
     public function getIdPost() {
@@ -88,7 +100,7 @@ class Post {
     // Test if the title is a string and if the length is >1 and <100 & stock it in $_title
     public function setTitle($title) {
         if(is_string($title)){
-            if((strlen(utf8_decode($title))) > 1 && (strlen(utf8_decode($title))) < 100){
+            if((strlen(utf8_decode($title))) >= 1 && (strlen(utf8_decode($title))) < 100){
                 $this->_title = $title;
             }
         }

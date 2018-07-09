@@ -93,21 +93,11 @@ class Router {
                             $this->ctrlPost->report($idComment);
                             break;
                         
-                        // SHOW THE LOGIN PAGE
-                        case "loginpage":
-                            $this->ctrlHome->logInPage();
-                            break;
-                        
                         // LOGIN
                         case "login":
                             $username = $this->getParameter($_POST, 'username');
                             $password = $this->getParameter($_POST, 'password');
                             $this->ctrlRegister->login($username, $password);
-                            break;
-                        
-                        // SHOW THE SIGNIN PAGE
-                        case "signinpage":
-                            $this->ctrlHome->signInPage();
                             break;
                         
                         // SIGNIN
