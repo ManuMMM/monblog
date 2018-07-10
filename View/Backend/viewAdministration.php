@@ -1,3 +1,4 @@
+<script src="Content/js/modalAdaptationForm.js"></script>
 <script src="Content/js/postForm.js"></script>
 <script src="Content/js/deleteArticleForm.js"></script>
 
@@ -79,31 +80,3 @@
     </div><!-- End modal new post -->
 </section>
 
-<!-- Update the data to edit in the modal -->
-<script>
-    function urldecode(url) {
-        return decodeURIComponent(url.replace(/\+/g, ' '));
-    }
-    
-    // Event on the opening of the modal, set content in textarea if needed (if we edit a post)
-    $('#modalPost').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        // Extract info from data-* attributes
-        var title = urldecode(button.data('titlepost'));
-        var content = urldecode(button.data('contentpost'));
-        var id = button.data('idpost');
-        var modal = $(this);
-        if(content.length > 1){
-            modal.find('h4.modal-title').text('Modification de "' + title + '"');
-            $( "#postForm" ).attr( "action", "index.php?action=updatepost" );
-            $("#postFormId").attr("value", id);
-            $("#btn-submitPost").val("Modifier")
-        }else{
-            modal.find('h4.modal-title').text('Nouvel Article');
-            $( "#postForm" ).attr( "action", "index.php?action=addpost" );
-            $("#btn-submitPost").val("Publier")
-        }
-        modal.find('#title').val(title);
-        tinyMCE.activeEditor.setContent(content);      
-    });
-</script>
