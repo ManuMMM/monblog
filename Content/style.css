@@ -445,12 +445,13 @@ noscript p{
 /* ----------------------- Administration Ajax ------------------------------ */
 /* -------------------------------------------------------------------------- */
 
-#adminPanel{
+#adminPanel, #adminPanel2{
     display: flex;
     flex-direction: column;
     background-color: #1b1e21;
-    border-radius: 2em;
-    padding: 2em;
+    border-radius: 2rem;
+    padding: 2rem;
+    margin-bottom: 1rem;
     position: relative;
 }
 
@@ -464,7 +465,7 @@ noscript p{
     font-size: 1.5em;
 }
 
-#newArticle h2{
+#newArticle h2, #newComment h2{
     border: 2px dotted #495057;
     border-radius: 0.3em;
     margin: 0 auto 1rem auto;

@@ -32,11 +32,11 @@ class ControllerPost {
             $excerpt = $post->getExcerpt();
             $datatitlepost = urlencode($post->getTitle());
             $datacontentpost = urlencode($post->getContent());
-            $line ='line' . $post->getIdPost();
+            $line = 'line' . $post->getIdPost();
             $data['datanewline'] = '<tr id="' . $line .'"><td><a href="index.php?action=getPost&id=' . $idPost . '"><h2 class="titlePost">' . $title . '</h2></a></td><td><p>' . $excerpt . '</p></td><td><time>' . $date . '</time></td><td><button style="padding-right: 10px;" type="button" class="btn-simple" data-toggle="modal" data-target="#modalPost" data-idpost="' . $idPost . '" data-titlepost="' . $datatitlepost . '" data-contentpost="' . $datacontentpost . '"><i class="fas fa-edit tooltip-edit"></i></button><form id="deleteArticleForm' . $idPost . '" class="deleteArticleForm" action="index.php?action=deletepost" method="post"><input type="hidden" name="id" value="' . $idPost . '" /><button type="submit" class="btn-simple"><i class="fas fa-trash-alt tooltip-delete" data-original-title="" title=""></i></button></form></td></tr>';
         }else{
             $data['state'] = 'fail';
-            $data['return'] = 'Une erreur est survenue, la publication de l\'article à échouée, veuillez réessayer ultérieurement !';
+            $data['return'] = 'Une erreur est survenue, la publication de l\'article a échoué, veuillez réessayer ultérieurement !';
         }
         echo json_encode($data);
     }
@@ -117,9 +117,23 @@ class ControllerPost {
     public function moderate($idComment) {
         $comment = $this->commentManager->getComment($idComment);
         $comment->allowComment();
-        $this->commentManager->flag($comment);
-        // Refresh the Admin panel view
-        header('location:index.php?action=admin#moderateComments');
+        $commentModerated = $this->commentManager->flag($comment);
+        $data = [];
+        if($commentModerated === TRUE){
+            $data['state'] = 'moderated';
+            $data['return'] = '<strong>Le commentaire vient d\'être modéré !</strong>';
+            $titlePost = '<a href="index.php?action=getPost&id=' . $comment->getIdPost() . '"><h2 class="titlePost">' . $comment->getTitle($comment->getIdPost()) . '</h2></a>';
+            $commentContent = '<p>' . $comment->getContent() . '</p>';
+            $date = '<time>' . $comment->getDate() . '</time>';
+            $action = '<i class="far fa-check-circle tooltip-moderated"></i>';
+            $line = 'line' . $comment->getIdComment();
+            $data['linetoedit'] = $line;
+            $data['datanewline'] = '<tr id="' . $line .'"><td>' . $titlePost . '</td><td>' . $commentContent . '</td><td>' . $date . '</td><td>' . $action . '</td></tr>';
+        }else{
+            $data['state'] = 'fail';
+            $data['return'] = 'Une erreur est survenue, la modération du commentaire a échoué, veuillez réessayer ultérieurement !';
+        }
+        echo json_encode($data);
     }
   
 }

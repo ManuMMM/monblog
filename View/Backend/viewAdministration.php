@@ -87,18 +87,22 @@
     <table class="articles table-stripped">
         <thead>
             <th>Article</th>
-            <th>Date</th>
             <th>Commentaire</th>
+            <th>Date</th>
             <th>Action</th>
         </thead>
-        <tbody id="listComments">
+        <tbody id="listCommentsToModerate">
             <?php foreach ($comments as $comment): ?>
-            <tr>
-                <td></td>
+            <tr id="<?php echo 'line' . $comment->getIdComment(); ?>">
+                <td>
+                    <a href="<?= "index.php?action=getPost&id=" . $comment->getIdPost(); ?>">
+                        <h2 class="titlePost"><?= $comment->getTitle($comment->getIdPost()); ?></h2>
+                    </a>
+                </td>
                 <td><p><?= $comment->getContent(); ?></p></td>
                 <td><time><?= $comment->getDate(); ?></time></td>
                 <td>
-                    <form method="post" action="index.php?action=moderatecomment">
+                    <form method="post" action="index.php?action=moderatecomment" class="moderateCommentForm">
                         <input type="hidden" name="comment" value="<?= $comment->getIdComment(); ?>" />
                         <button type="submit" class="btn-simple"><i class="far fa-thumbs-up tooltip-allow"></i></button>
                     </form>
@@ -108,3 +112,36 @@
         </tbody>
     </table>
 </section>
+
+
+<script>
+    $(document).ready(function(){
+        // Ajax moderate comment
+        $("#listCommentsToModerate").on("submit", ".moderateCommentForm", function(event){
+            event.preventDefault();
+            // Display a loader (CSS)
+            $(".loaderOverlay").show();
+            // Declare variables
+            comment = $(this).find("input[name=comment]").val();
+            url = $(this).attr("action");
+            // Check if the two inputs aren't empty and then do an Ajax call in post
+            if(comment.trim() != ''){
+                $.post(url,{comment:comment}, function(data){
+                    // Hide the Loader (CSS)
+                    $(".loaderOverlay").fadeOut();
+                    if(data.state == "moderated"){
+                        // Add the line for the of the updated article in the table
+                        $("#" + data.linetoedit).after(data.datanewline);
+                        // Remove the old line which was edited from the table
+                        $("#" + data.linetoedit).remove();
+                        $("#messageSuccess").html(data.return).fadeIn().delay(5000).fadeOut();
+                    }else{
+                        $("#messageFail").html(data.return).fadeIn().delay(5000).fadeOut();
+                    }
+                }, "json");
+            }else{
+                $("#messageFail").html(data.return).fadeIn().delay(5000).fadeOut();
+            }
+        });
+    });
+</script>
