@@ -80,3 +80,31 @@
     </div><!-- End modal new post -->
 </section>
 
+<section class="adminSections" id="adminPanel2">
+    <div id="newComment">
+        <h2>Modération des commentaires</h2>
+    </div>
+    <table class="articles table-stripped">
+        <thead>
+            <th>Article</th>
+            <th>Date</th>
+            <th>Commentaire</th>
+            <th>Action</th>
+        </thead>
+        <tbody id="listComments">
+            <?php foreach ($comments as $comment): ?>
+            <tr>
+                <td></td>
+                <td><p><?= $comment->getContent(); ?></p></td>
+                <td><time><?= $comment->getDate(); ?></time></td>
+                <td>
+                    <form method="post" action="index.php?action=moderatecomment">
+                        <input type="hidden" name="comment" value="<?= $comment->getIdComment(); ?>" />
+                        <button type="submit" class="btn-simple"><i class="far fa-thumbs-up tooltip-allow"></i></button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</section>
