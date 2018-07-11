@@ -175,7 +175,7 @@
                     <?= $content ?>
                 </div>
                 <footer id="footerBlog">
-                    Blog realisé avec PHP, JAVASCRIPT, jQUERY, HTML5 et CSS.
+                    Blog realisé avec  (jQUERY, Bootstrap, Fontawesome) PHP, JAVASCRIPT, HTML5 et CSS.
                     <?php if(isset($_SESSION['session']['accreditation']) && $_SESSION['session']['accreditation'] == 1){ ?> <a href="index.php?action=admin">Admin</a> <?php } ?>
                 </footer>
             </div> <!-- End #globalMargin -->

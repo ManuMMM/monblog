@@ -31,6 +31,9 @@ $(document).ready(function(){
                     $("#listPosts").prepend(data.datanewline);
                     // Remove the last line in the table
                     $("#listPosts tr").last().remove();
+                    // Add the tooltips to the 'edit' & 'delete' icons
+                    $('.tooltip-edit').tooltip({title: "Editer"});
+                    $('.tooltip-delete').tooltip({title: "Supprimer"});
                     // Display a message to confirm the connection
                     $("#messageSuccess").html(data.return).fadeIn().delay(5000).fadeOut();
                 }else if(data.state == "edit"){
@@ -40,6 +43,9 @@ $(document).ready(function(){
                     $("#" + data.linetoedit).after(data.datanewline);
                     // Remove the old line which was edited from the table
                     $("#" + data.linetoedit).remove();
+                    // Add the tooltips to the 'edit' & 'delete' icons
+                    $('.tooltip-edit').tooltip({title: "Editer"});
+                    $('.tooltip-delete').tooltip({title: "Supprimer"});
                     // Display a message to confirm the connection
                     $("#messageSuccess").html(data.return).fadeIn().delay(5000).fadeOut();
                 }else{

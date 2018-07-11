@@ -1,20 +1,13 @@
 <script src="Content/js/modalAdaptationForm.js"></script>
 <script src="Content/js/postForm.js"></script>
 <script src="Content/js/deleteArticleForm.js"></script>
+<script src="Content/js/moderateCommentForm.js"></script>
 
 <?php $this->title = "Jean Forteroche - Panneau d'aministration" ?>
-<section class="adminSections" id="moderateComments">
-    <h2>Modérer les commentaires</h2>
-    <?php foreach ($comments as $comment): ?>
-        <p>(<time><?= $comment->getDate(); ?></time>) <?= $comment->getAuthor(); ?> :</p>
-        <p><?= $comment->getContent(); ?></p>
-        <form method="post" action="index.php?action=moderatecomment">
-            <input type="hidden" name="comment" value="<?= $comment->getIdComment(); ?>" />
-            <input type="submit" value="Autoriser" />
-        </form>
-    <?php endforeach; ?>
-</section>
+
 <!-- Administration in Ajax -->
+
+<!-- Administration Articles -->
 <section class="adminSections" id="adminPanel">
     <div id="newArticle">
         <h2>Gestionnaire d'articles</h2>
@@ -80,6 +73,7 @@
     </div><!-- End modal new post -->
 </section>
 
+<!-- Administration Comments -->
 <section class="adminSections" id="adminPanel2">
     <div id="newComment">
         <h2>Modération des commentaires</h2>
@@ -112,36 +106,3 @@
         </tbody>
     </table>
 </section>
-
-
-<script>
-    $(document).ready(function(){
-        // Ajax moderate comment
-        $("#listCommentsToModerate").on("submit", ".moderateCommentForm", function(event){
-            event.preventDefault();
-            // Display a loader (CSS)
-            $(".loaderOverlay").show();
-            // Declare variables
-            comment = $(this).find("input[name=comment]").val();
-            url = $(this).attr("action");
-            // Check if the two inputs aren't empty and then do an Ajax call in post
-            if(comment.trim() != ''){
-                $.post(url,{comment:comment}, function(data){
-                    // Hide the Loader (CSS)
-                    $(".loaderOverlay").fadeOut();
-                    if(data.state == "moderated"){
-                        // Add the line for the of the updated article in the table
-                        $("#" + data.linetoedit).after(data.datanewline);
-                        // Remove the old line which was edited from the table
-                        $("#" + data.linetoedit).remove();
-                        $("#messageSuccess").html(data.return).fadeIn().delay(5000).fadeOut();
-                    }else{
-                        $("#messageFail").html(data.return).fadeIn().delay(5000).fadeOut();
-                    }
-                }, "json");
-            }else{
-                $("#messageFail").html(data.return).fadeIn().delay(5000).fadeOut();
-            }
-        });
-    });
-</script>
