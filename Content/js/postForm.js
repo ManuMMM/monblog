@@ -57,14 +57,14 @@ $(document).ready(function(){
             $(".loaderOverlay").fadeOut();
             if(title.trim() == ''){
                 // Display a error message under the title input
-                titleInput.after("Veuillez renseigner le titre");
+                titleInput.after('<p class="error">Veuillez renseigner le titre</p>');
                 // Put the focus on the input to correct
                 titleInput.addClass("errorFocus");
-            }else{
+            }else if(content.trim() == ''){
                 // Display a error message under the content input
-                tinyMCE.get('txtPost').after("Veuillez renseigner du contenu pour l'article");
+                $("#mceu_15").after('<p class="error">Veuillez renseigner du contenu pour l\'article</p>');
                 // Put the focus on the input to correct
-                tinyMCE.get('txtPost').addClass("errorFocus");
+                $("#mceu_15").addClass("errorFocus");
             }
         }
     });

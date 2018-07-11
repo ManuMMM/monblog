@@ -51,12 +51,12 @@ $(document).ready(function(){
         }else{
             if(username.trim() == ''){
                 // Display a error message under the username input
-                usernameInput.after("Veuillez renseigner l'identifiant");
+                usernameInput.after('<p class="error">Veuillez renseigner l\'identifiant</p>');
                 // Put the focus on the input to correct
                 usernameInput.addClass("errorFocus");
             }else{
                 // Display a error message under the password input
-                passwordInput.after("Veuillez renseigner le mot de passe");
+                passwordInput.after('<p class="error">Veuillez renseigner le mot de passe</p>');
                 // Put the focus on the input to correct
                 passwordInput.addClass("errorFocus");
             }
