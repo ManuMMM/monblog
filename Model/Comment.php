@@ -51,6 +51,14 @@ class Comment {
         $this->setFlag(FALSE);
     }
     
+    // Get title of the related article (matching the id of the post given)
+    public function getTitle($idPost) {
+        $postmanager = new PostManager();
+        $post = $postmanager->getPost($idPost);
+        $titlePost = $post->getTitle();
+        return $titlePost;
+    }
+    
     // GETTERS //
     
     public function getIdComment() {

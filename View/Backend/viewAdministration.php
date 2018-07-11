@@ -1,53 +1,108 @@
+<script src="Content/js/modalAdaptationForm.js"></script>
+<script src="Content/js/postForm.js"></script>
+<script src="Content/js/deleteArticleForm.js"></script>
+<script src="Content/js/moderateCommentForm.js"></script>
+
 <?php $this->title = "Jean Forteroche - Panneau d'aministration" ?>
-<form method="post" action="#writePost">
-    <button>Ecrire un article</button>
-</form>
-<form method="post" action="#modifyPost">
-    <button>Editer un article</button>
-</form>
-<form method="post" action="#moderateComments">
-    <button>Modérer les commentaires</button>
-</form>
-<section class="adminSections" id="writePost">
-    <header>
-        <h1 id="admin_write_article">Rédaction d'article</h1>
-    </header>
-    <form method="post" action="index.php?action=addpost">
-    <input id="title" name="title" type="text" placeholder="Titre" required /><br />
-    <textarea id="txtPost" name="content" rows="4" placeholder="Article" required></textarea><br />
-    <input type="hidden" name="id" value="" />
-    <button type="reset">Effacer</button>
-    <input type="submit" value="Publier" />
-    </form>
+
+<!-- Administration in Ajax -->
+
+<!-- Administration Articles -->
+<section class="adminSections" id="adminPanel">
+    <div id="newArticle">
+        <h2>Gestionnaire d'articles</h2>
+        <a href="#modalPost" class="btn tooltip-add" data-toggle="modal" data-idpost="" data-titlepost="" data-contentpost=""><i class="fas fa-plus-circle"></i> Ecrire un nouvel article</a>
+    </div>    
+    <table class="articles table-stripped">
+        <thead>
+            <th>Titre</th>
+            <th>Article</th>
+            <th>Date</th>
+            <th>Action</th>
+        </thead>
+        <tbody id="listPosts">
+            <?php foreach ($posts as $post): ?>
+            <tr id="<?php echo 'line' . $post->getIdPost(); ?>">
+                <td>
+                    <a href="<?= "index.php?action=getPost&id=" . $post->getIdPost(); ?>">
+                        <h2 class="titlePost"><?= $post->getTitle(); ?></h2>
+                    </a>
+                </td>
+                <td>
+                    <p><?= $post->getExcerpt(); ?></p>
+                </td>
+                <td>
+                    <time><?= $post->getDate(); ?></time>
+                </td>
+                <td>
+                    <button type="button" class="btn-simple" data-toggle="modal" data-target="#modalPost" data-idpost="<?= $post->getIdPost(); ?>" data-titlepost="<?= urlencode($post->getTitle()); ?>" data-contentpost="<?= urlencode($post->getContent()); ?>"><i class="fas fa-edit tooltip-edit"></i></button>
+                    <form id="<?php echo 'deleteArticleForm' . $post->getIdPost(); ?>" class="deleteArticleForm" action="index.php?action=deletepost" method="post">
+                        <input type="hidden" name="id" value="<?php echo $post->getIdPost(); ?>" />
+                        <button type="submit" class="btn-simple"><i class="fas fa-trash-alt tooltip-delete"></i></button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    <!-- Modal new post -->
+    <div id="modalPost" class="modal fade">        
+        <div class="modal-dialog modal-post">
+            <div class="modal-content">
+                <div class="modal-header">				
+                    <h4 class="modal-title">Nouvel Article</h4>
+                    <button id="closePost" type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+                    <form id="postForm" action="index.php?action=addpost" method="post">
+                        <div class="form-group form-title">
+                            <i class="fas fa-pencil-alt"></i>
+                            <input type="text" class="form-control modal-title" id="title" name="title" placeholder="Titre" required="required">
+                        </div>
+                        <div class="form-group">
+                            <textarea id="txtPost" name="content" rows="4" placeholder="Article"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <input id="postFormId" type="hidden" name="id" value="" />
+                            <input type="submit" id="btn-submitPost" class="btn btn-primary btn-block btn-lg" value="Publier">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div><!-- End modal new post -->
 </section>
-<section class="adminSections" id="modifyPost">
-    <h2>Modifier un article</h2>
-    <?php foreach ($posts as $post): ?>
-    <section>
-        <a href="<?= "index.php?action=getPost&id=" . $post->getIdPost(); ?>">
-            <h2 class="titlePost"><?= $post->getTitle(); ?></h2>
-        </a>
-        <time><?= $post->getDate(); ?></time>
-        <form method="post" action="index.php?action=editor">
-            <input type="hidden" name="id" value="<?= $post->getIdPost(); ?>" />
-            <input type="submit" value="Editer" />
-        </form>
-        <form method="post" action="index.php?action=deletepost">
-            <input type="hidden" name="id" value="<?= $post->getIdPost(); ?>" />
-            <input type="submit" value="Supprimer" />
-        </form>
-    </section>
-    <hr />
-    <?php endforeach; ?>
-</section>
-<section class="adminSections" id="moderateComments">
-    <h2>Modérer les commentaires</h2>
-    <?php foreach ($comments as $comment): ?>
-        <p>(<time><?= $comment->getDate(); ?></time>) <?= $comment->getAuthor(); ?> :</p>
-        <p><?= $comment->getContent(); ?></p>
-        <form method="post" action="index.php?action=moderatecomment">
-            <input type="hidden" name="comment" value="<?= $comment->getIdComment(); ?>" />
-            <input type="submit" value="Autoriser" />
-        </form>
-    <?php endforeach; ?>
+
+<!-- Administration Comments -->
+<section class="adminSections" id="adminPanel2">
+    <div id="newComment">
+        <h2>Modération des commentaires</h2>
+    </div>
+    <table class="articles table-stripped">
+        <thead>
+            <th>Article</th>
+            <th>Commentaire</th>
+            <th>Date</th>
+            <th>Action</th>
+        </thead>
+        <tbody id="listCommentsToModerate">
+            <?php foreach ($comments as $comment): ?>
+            <tr id="<?php echo 'line' . $comment->getIdComment(); ?>">
+                <td>
+                    <a href="<?= "index.php?action=getPost&id=" . $comment->getIdPost(); ?>">
+                        <h2 class="titlePost"><?= $comment->getTitle($comment->getIdPost()); ?></h2>
+                    </a>
+                </td>
+                <td><p><?= $comment->getContent(); ?></p></td>
+                <td><time><?= $comment->getDate(); ?></time></td>
+                <td>
+                    <form method="post" action="index.php?action=moderatecomment" class="moderateCommentForm">
+                        <input type="hidden" name="comment" value="<?= $comment->getIdComment(); ?>" />
+                        <button type="submit" class="btn-simple"><i class="far fa-thumbs-up tooltip-allow"></i></button>
+                    </form>
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
 </section>

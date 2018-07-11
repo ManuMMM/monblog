@@ -34,7 +34,8 @@ class CommentManager extends Model {
     // Flag a comment
     public function flag(Comment $comment) {
         $sql = 'UPDATE t_comment SET COM_FLAG = ? WHERE COM_ID = ?';
-        $req = $this->executeRequest($sql, array($comment->getFlag(), $comment->getIdComment()));
+        $this->executeRequest($sql, array($comment->getFlag(), $comment->getIdComment()));
+        return TRUE;
     }
     
     // Returns the list of comments associated with a post
