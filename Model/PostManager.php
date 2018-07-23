@@ -5,7 +5,7 @@ class PostManager extends Model {
     // Add a new post in the database
     public function addPost(Post $post) {
         $post->setDate();  // Get the current date
-        $sql = 'INSERT INTO t_post(BIL_DATE, BIL_TITLE, BIL_CONTENT) VALUES(?, ?, ?)';
+        $sql = 'INSERT INTO T_POST(BIL_DATE, BIL_TITLE, BIL_CONTENT) VALUES(?, ?, ?)';
         $this->executeRequest($sql, array($post->getDate(), $post->getTitle(), $post->getContent()));
         // Hydrate the Post Object
         $post->hydrate(array('id' => $this->lastId()));
@@ -14,14 +14,14 @@ class PostManager extends Model {
     
     // Update a post in the database
     public function updatePost(Post $post) {
-        $sql = 'UPDATE t_post SET BIL_TITLE = ?, BIL_CONTENT = ? WHERE BIL_ID = ?';
+        $sql = 'UPDATE T_POST SET BIL_TITLE = ?, BIL_CONTENT = ? WHERE BIL_ID = ?';
         $this->executeRequest($sql, array($post->getTitle(), $post->getContent(), $post->getIdPost()));
         return TRUE;
     }
     
     // Delete a post in the database
     public function deletePost($idPost) {
-        $sql = 'DELETE FROM t_post WHERE BIL_ID = ?';
+        $sql = 'DELETE FROM T_POST WHERE BIL_ID = ?';
         $this->executeRequest($sql, array($idPost));
         return TRUE;
     }

@@ -21,7 +21,7 @@ class Autoloader {
      */
     public static function autoload($class){
         // List the differents folders where to look for the class to load
-        $directory = array( 'model/', 'controller/', 'view/');
+        $directory = array( 'Model/', 'Controller/', 'View/');
         // Loop the search in all the specified folders
         foreach ($directory as $current_dir) {
             $file = $current_dir . $class .'.php';
