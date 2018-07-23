@@ -11,7 +11,7 @@ class CommentManager extends Model {
     
     // Update a comment in the database
     public function updateComment(Comment $comment) {
-        $sql = 'UPDATE t_comment SET COM_AUTHOR = ?, COM_CONTENT = ? WHERE COM_ID = ?';
+        $sql = 'UPDATE T_COMMENT SET COM_AUTHOR = ?, COM_CONTENT = ? WHERE COM_ID = ?';
         $this->executeRequest($sql, array($comment->getAuthor(), $comment->getContent(), $comment->getIdPost()));
     }
     
@@ -33,7 +33,7 @@ class CommentManager extends Model {
     
     // Flag a comment
     public function flag(Comment $comment) {
-        $sql = 'UPDATE t_comment SET COM_FLAG = ? WHERE COM_ID = ?';
+        $sql = 'UPDATE T_COMMENT SET COM_FLAG = ? WHERE COM_ID = ?';
         $this->executeRequest($sql, array($comment->getFlag(), $comment->getIdComment()));
         return TRUE;
     }

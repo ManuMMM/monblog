@@ -18,7 +18,7 @@ class UserManager extends Model {
                     // Save its hash in the database under the username profile
                     $token_session_hash = $this->hash($token_session);
                     $user = new User(array('username' => $username, 'passwordHash' => $passwordHash, 'email' => $email, 'tokenSession' => $token_session_hash));
-                    $sql = 'INSERT INTO t_users_temporary(username, password_hash, email, inscription_date, token_session, accreditation_id) VALUES(?, ?, ?, NOW(), ?, ?)';
+                    $sql = 'INSERT INTO T_USERS_TEMPORARY(username, password_hash, email, inscription_date, token_session, accreditation_id) VALUES(?, ?, ?, NOW(), ?, ?)';
                     $this->executeRequest($sql, [$user->getUsername(), $user->getPasswordHash(), $user->getEmail(), $user->getTokenSession(), 7]);
                     $this->sendConfirmationEmail($user->getUsername(), $user->getEmail(), $token_session);
                     return TRUE;
@@ -55,7 +55,7 @@ class UserManager extends Model {
                 $token_session = $this->token();
                 // Save its hash in the database under the username profile
                 $token_session_hash = $this->hash($token_session);
-                $sql = 'UPDATE t_users SET token_session = ? WHERE username = ?';
+                $sql = 'UPDATE T_USERS SET token_session = ? WHERE username = ?';
                 $req = $this->executeRequest($sql, [$token_session_hash, $user->getUsername()]);
                 // Save the current profile in session variables
                 $_SESSION['session']['id'] = $user->getId();
@@ -187,16 +187,16 @@ class UserManager extends Model {
     
     // Check if the activation from a confirmation link has the correct key, and, if so, save the user profile in the database & delete the one in the temporary table
     public function emailActivation($username, $token_session) {
-        $sql = 'SELECT username, password_hash as passwordHash, email, inscription_date as inscriptionDate, token_session as TokenSession, accreditation_id as idAccreditationLevel FROM t_users_temporary WHERE username = ?';
+        $sql = 'SELECT username, password_hash as passwordHash, email, inscription_date as inscriptionDate, token_session as TokenSession, accreditation_id as idAccreditationLevel FROM T_USERS_TEMPORARY WHERE username = ?';
         $req = $this->executeRequest($sql, array($username));
         if ($req->rowCount() == 1){
             $data = $req->fetch();
             $user = new User($data);
             $token_session_hash = $user->getTokenSession();
             if($this->verify($token_session, $token_session_hash)){
-                $sql = 'INSERT INTO t_users(username, password_hash, email, inscription_date, accreditation_id) VALUES(?, ?, ?, NOW(), ?)';
+                $sql = 'INSERT INTO T_USERS(username, password_hash, email, inscription_date, accreditation_id) VALUES(?, ?, ?, NOW(), ?)';
                 $this->executeRequest($sql, [$user->getUsername(), $user->getPasswordHash(), $user->getEmail(), 7]);
-                $sql2 = 'DELETE FROM t_users_temporary WHERE username = ?';
+                $sql2 = 'DELETE FROM T_USERS_TEMPORARY WHERE username = ?';
                 $this->executeRequest($sql2, array($username));
                 return TRUE;
             }else{
@@ -212,7 +212,7 @@ class UserManager extends Model {
     // Get the user from the database with the given username 
     public function getUser($username) {
         $sql = 'SELECT id, username, password_hash as passwordHash, email, inscription_date as inscriptionDate, token_session as TokenSession, accreditation_id as idAccreditationLevel'
-             . ' FROM t_users'
+             . ' FROM T_USERS'
              . ' WHERE username = ?';
         $req = $this->executeRequest($sql, array($username));
         if ($req->rowCount() == 1){
@@ -225,13 +225,13 @@ class UserManager extends Model {
             
     public function delete(User $user) {
         // Delete an user
-        $sql = 'DELETE FROM t_post WHERE BIL_ID = ?';
+        $sql = 'DELETE FROM T_POST WHERE BIL_ID = ?';
         $this->executeRequest($sql, array($idPost));
     }
     
     // Check if the Username is already existing in the database, return false if any result found, otherwise return true.
     public function validUsername($username) {
-        $sql = 'SELECT * FROM t_users WHERE username = ?';
+        $sql = 'SELECT * FROM T_USERS WHERE username = ?';
         $req = $this->executeRequest($sql, [$username]);
         if ($req->rowCount() == 0){
             return TRUE;
